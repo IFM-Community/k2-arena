@@ -225,9 +225,10 @@ function App() {
           onAdvance={advanceQuestion}
           questionIndex={currentQuestionIndex}
           totalQuestions={totalQuestions}
+          myUsername={username}
         />
       )}
-      
+
       {gameState === 'finished' && (
         <FinalLeaderboard
           leaderboard={leaderboard}
@@ -384,12 +385,15 @@ function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, qu
   )
 }
 
-function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex, answerCounts, isHost, isLastQuestion, onAdvance, questionIndex, totalQuestions }) {
+function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex, answerCounts, isHost, isLastQuestion, onAdvance, questionIndex, totalQuestions, myUsername }) {
   const colors = ['#ff4757', '#2ed573', '#ffa502', '#3742fa']
   const letters = ['A', 'B', 'C', 'D']
   const answered = pickedAnswer !== null && pickedAnswer !== undefined
   const hasCorrectAnswer = correctAnswerIndex !== null && correctAnswerIndex !== undefined
   const wasCorrect = answered && hasCorrectAnswer && pickedAnswer === correctAnswerIndex
+  const topThree = leaderboard.slice(0, 3)
+  const myEntry = leaderboard.find(p => p.username === myUsername)
+  const showMyEntry = myEntry && myEntry.rank > 3
 
   return (
     <div className="screen results-screen">
@@ -419,14 +423,23 @@ function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex
       </div>
 
       <div className="leaderboard-preview">
-        <h3>Leaderboard Top 10</h3>
+        <h3>Leaderboard</h3>
         <ul>
-          {leaderboard.slice(0, 10).map((p, i) => (
+          {topThree.map((p, i) => (
             <li key={i} className={`leaderboard-item ${i === 0 ? 'winner' : ''}`}>
               <span>#{p.rank} {p.username}</span>
               <span>{p.score} pts total</span>
             </li>
           ))}
+          {showMyEntry && (
+            <>
+              <li className="leaderboard-divider">···</li>
+              <li className="leaderboard-item leaderboard-item-me">
+                <span>#{myEntry.rank} {myEntry.username} (You)</span>
+                <span>{myEntry.score} pts total</span>
+              </li>
+            </>
+          )}
         </ul>
       </div>
 

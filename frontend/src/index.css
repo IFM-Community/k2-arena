@@ -458,6 +458,18 @@ body {
   border: 2px solid #2ed573;
 }
 
+.leaderboard-item.leaderboard-item-me {
+  background: rgba(0, 217, 255, 0.15);
+  border: 2px solid #00d9ff;
+}
+
+.leaderboard-divider {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.3em;
+  margin-bottom: 0.4rem;
+}
+
 @keyframes slideIn {
   from { transform: translateX(-20px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
