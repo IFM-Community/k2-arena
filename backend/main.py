@@ -138,27 +138,22 @@ def get_emissions_for_host() -> dict:
 
 @app.get("/")
 async def get_root():
-    # Try frontend/dist first (Railway builds here)
-    static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
-    alt_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    # Try root level dist first (Railway copies here)
+    static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "dist")
+    alt_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
+    alt_static = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
     index_path = os.path.join(static_dir, "index.html")
     alt_index = os.path.join(alt_dir, "index.html")
+    alt_static_index = os.path.join(alt_static, "index.html")
     
-    exists_dist = os.path.exists(index_path)
-    exists_static = os.path.exists(alt_index)
-    
-    if exists_dist:
+    if os.path.exists(index_path):
         return FileResponse(index_path)
-    if exists_static:
+    if os.path.exists(alt_index):
         return FileResponse(alt_index)
+    if os.path.exists(alt_static_index):
+        return FileResponse(alt_static_index)
     
-    return HTMLResponse(f"""
-    <h1>K2 Arena</h1>
-    <p>Checking for index.html...</p>
-    <p>frontend/dist/index.html exists: {exists_dist}</p>
-    <p>backend/static/index.html exists: {exists_static}</p>
-    <pre>{os.listdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))}</pre>
-    """)
+    return HTMLResponse("""<h1>K2 Arena</h1><p>Looking for built frontend...</p>""")
 
 
 @sio.event
