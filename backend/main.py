@@ -343,6 +343,9 @@ game.get_leaderboard = get_leaderboard
 async def disconnect(sid):
     if sid in game.players:
         del game.players[sid]
+        # If the host left, clear host_sid so a new session can be created
+        if sid == game.host_sid:
+            game.host_sid = None
         emit_to_all("player_left", {"sid": sid})
     print(f"Client disconnected: {sid}")
 
