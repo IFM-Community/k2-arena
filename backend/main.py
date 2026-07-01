@@ -139,6 +139,11 @@ def get_emissions_for_host() -> dict:
 @app.get("/")
 async def get_root():
     static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    # Also try from project root
+    if not os.path.exists(static_dir):
+        project_root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
+        if os.path.exists(project_root):
+            static_dir = project_root
     index_path = os.path.join(static_dir, "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
@@ -368,6 +373,10 @@ async def reset_game():
 @app.get("/{full_path:path}")
 async def serve_spa(full_path: str):
     static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    if not os.path.exists(static_dir):
+        project_root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
+        if os.path.exists(project_root):
+            static_dir = project_root
     index_path = os.path.join(static_dir, "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
@@ -376,6 +385,10 @@ async def serve_spa(full_path: str):
 
 if __name__ == "__main__":
     static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    if not os.path.exists(static_dir):
+        project_root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
+        if os.path.exists(project_root):
+            static_dir = project_root
     if os.path.exists(static_dir):
         app.mount("/static", StaticFiles(directory=static_dir), name="static")
     uvicorn.run(sio_app, host="0.0.0.0", port=8000)
