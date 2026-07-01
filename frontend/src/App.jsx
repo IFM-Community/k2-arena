@@ -393,8 +393,6 @@ function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex
 
   return (
     <div className="screen results-screen">
-      <div className="results-header">Results</div>
-
       <div className="question-header">
         {question.is_tutorial ? (
           <span className="question-number tutorial-badge">Practice Question</span>
