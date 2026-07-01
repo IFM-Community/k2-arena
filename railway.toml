@@ -2,12 +2,16 @@
 backend = "python"
 params = { "railwaypythonxref" = "3.11" }
 
-[start]
-backend = "off"
-
 [deploy]
 build = "npm run build"
 buildDir = "frontend"
+
+[healthcheck]
+port = 8000
+path = "/"
+
+[processes]
+backend = "python -m uvicorn app:app --host 0.0.0.0 --port $PORT"
 
 [postBuildCommand]
 command = "echo 'Build complete'"
