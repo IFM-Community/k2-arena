@@ -7,15 +7,13 @@
   },
   "steps": {
     "install-frontend": {
-      "inputs": [{ "local": true }],
+      "inputs": ["."],
       "commands": [
         "cd frontend && npm install"
       ]
     },
     "build-frontend": {
-      "inputs": [
-        { "step": "install-frontend" }
-      ],
+      "inputs": ["install-frontend"],
       "commands": [
         "cd frontend && npm run build",
         "cp -r dist /app/backend/static"
@@ -25,9 +23,7 @@
       ]
     },
     "install-python": {
-      "inputs": [
-        { "step": "build-frontend" }
-      ],
+      "inputs": ["build-frontend"],
       "commands": [
         "pip install -r requirements.txt"
       ],
@@ -38,8 +34,6 @@
   },
   "deploy": {
     "startCommand": "python -m uvicorn app:app --host 0.0.0.0 --port $PORT",
-    "inputs": [
-      { "step": "install-python", "include": ["/app"] }
-    ]
+    "inputs": ["install-python"]
   }
 }
