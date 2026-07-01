@@ -138,18 +138,17 @@ def get_emissions_for_host() -> dict:
 
 @app.get("/")
 async def get_root():
-    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
-    # Also try from project root
+    # Try frontend/dist first (Railway builds here)
+    static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
+    # Also try backend/static  
     if not os.path.exists(static_dir):
-        project_root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
-        if os.path.exists(project_root):
-            static_dir = project_root
+        static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
     index_path = os.path.join(static_dir, "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
     return HTMLResponse("""
-    <h1>K2 Arena - Server Running</h1>
-    <p>The frontend is building. Please wait and refresh.</p>
+    <h1>K2 Arena</h1>
+    <p style="font-size: 0.9em; color: #999;">Build paths checked:</p>
     """)
 
 

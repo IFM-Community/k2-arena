@@ -3,7 +3,7 @@ backend = "python"
 params = { "railwaypythonxref" = "3.11" }
 
 [deploy]
-build = "cd frontend && npm install && npm run build && ls -la ../backend/static && cp -r dist ../backend/static"
+build = "cd frontend && npm install && npm run build"
 
 [postBuildCommand]
-command = "ls -la backend/static"
+command = "pwd && ls -la frontend/dist"
