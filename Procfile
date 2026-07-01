@@ -1,1 +1,1 @@
-backend: python -m uvicorn app:app --host 0.0.0.0 --port $PORT
+backend: python -m uvicorn app:sio_app --host 0.0.0.0 --port $PORT

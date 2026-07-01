@@ -36,7 +36,7 @@
     }
   },
   "deploy": {
-    "startCommand": "python -m uvicorn app:app --host 0.0.0.0 --port $PORT",
+    "startCommand": "python -m uvicorn app:sio_app --host 0.0.0.0 --port $PORT",
     "inputs": [
       {
         "step": "install-python",

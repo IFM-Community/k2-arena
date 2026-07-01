@@ -16,7 +16,6 @@ function App() {
   const [leaderboard, setLeaderboard] = useState([])
   const [host, setHost] = useState(null)
   const [pickedAnswer, setPickedAnswer] = useState(null)
-  const [networkStatus, setNetworkStatus] = useState('connecting')
   const [isHost, setIsHost] = useState(false)
   const [isObserver, setIsObserver] = useState(false)
   const [observerMessage, setObserverMessage] = useState('')
@@ -29,18 +28,6 @@ function App() {
       transports: ['websocket'],
       reconnection: true,
       reconnectionAttempts: 5,
-    })
-
-    newSocket.on('connect', () => {
-      setNetworkStatus('connected')
-    })
-
-    newSocket.on('disconnect', () => {
-      setNetworkStatus('disconnected')
-    })
-
-    newSocket.on('connect_error', () => {
-      setNetworkStatus('error')
     })
 
     newSocket.on('lobby_state', (data) => {
@@ -151,10 +138,6 @@ function App() {
 
   return (
     <div className="app">
-      {networkStatus !== 'connected' && (
-        <div className="network-status">Connecting{networkStatus === 'disconnected' ? '...' : ' to server'}</div>
-      )}
-      
       {gameState === 'lobby' && (
         <LobbyScreen 
           onJoin={joinLobby}

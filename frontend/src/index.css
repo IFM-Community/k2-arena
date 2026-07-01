@@ -32,18 +32,6 @@ body {
   flex: 1;
 }
 
-.network-status {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 217, 255, 0.2);
-  color: #00d9ff;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  pointer-events: none;
-}
-
 .title-gradient {
   text-align: center;
   margin-bottom: 2rem;
