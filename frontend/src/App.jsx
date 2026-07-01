@@ -21,6 +21,8 @@ function App() {
   const [isObserver, setIsObserver] = useState(false)
   const [observerMessage, setObserverMessage] = useState('')
   const [scores, setScores] = useState({})
+  const [roomExists, setRoomExists] = useState(false)
+  const [lobbyJoined, setLobbyJoined] = useState(false)
 
   useEffect(() => {
     const newSocket = io(SOCKET_URL, {
@@ -44,10 +46,13 @@ function App() {
     newSocket.on('lobby_state', (data) => {
       setPlayers(data.players || [])
       setIsHost(data.is_host || false)
+      setRoomExists(data.room_exists || false)
     })
 
     newSocket.on('lobby_joined', (data) => {
       setIsHost(data.is_host)
+      setRoomExists(data.room_exists || true)
+      setLobbyJoined(true)
     })
 
     newSocket.on('lobby_update', (data) => {
@@ -128,7 +133,6 @@ function App() {
     setUsername(name)
     if (socket) {
       socket.emit('join_lobby', { username: name })
-      socket.emit('set_host')
     }
   }, [socket])
 
@@ -156,6 +160,9 @@ function App() {
           onJoin={joinLobby}
           isHost={isHost}
           players={players}
+          roomExists={roomExists}
+          lobbyJoined={lobbyJoined}
+          onStartGame={startGame}
         />
       )}
       
@@ -195,7 +202,42 @@ function App() {
   )
 }
 
-function LobbyScreen({ onJoin, isHost, players }) {
+function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStartGame }) {
+  if (lobbyJoined) {
+    return (
+      <div className="screen lobby-screen">
+        <div className="title-gradient">
+          <h1>K2 Arena</h1>
+          <p className="subtitle">Lobby — Waiting for everyone to join</p>
+        </div>
+        
+        <div className="lobby-content">
+          <div className="players-list">
+            <h3>Players in Lobby ({players.length}/30)</h3>
+            <ul>
+              {players.map((p, i) => (
+                <li key={i} className="player-item">{p.username}{isHost && p.username === 'You' ? ' (You)' : ''}</li>
+              ))}
+            </ul>
+          </div>
+          
+          <div className="lobby-controls">
+            {isHost ? (
+              <button 
+                className="join-btn"
+                onClick={() => onStartGame(20)}
+              >
+                Start Game (20s per question)
+              </button>
+            ) : (
+              <p className="waiting-message">Waiting for host to start the game...</p>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
+  
   return (
     <div className="screen lobby-screen">
       <div className="title-gradient">
@@ -213,13 +255,13 @@ function LobbyScreen({ onJoin, isHost, players }) {
           </ul>
         </div>
         
-        <JoinForm onJoin={onJoin} isHost={isHost} playersCount={players.length} />
+        <JoinForm onJoin={onJoin} roomExists={roomExists} playersCount={players.length} />
       </div>
     </div>
   )
 }
 
-function JoinForm({ onJoin, isHost, playersCount }) {
+function JoinForm({ onJoin, roomExists, playersCount }) {
   const [name, setName] = useState('')
 
   const handleSubmit = (e) => {
@@ -244,7 +286,7 @@ function JoinForm({ onJoin, isHost, playersCount }) {
         className="join-btn"
         disabled={!name.trim() || playersCount >= 30}
       >
-        {isHost ? (playersCount > 0 ? 'Start Game' : 'Become Host') : 'Join Game'}
+        {roomExists ? 'Join Game' : 'Create Room'}
       </button>
       {playersCount >= 30 && (
         <p className="full-message">Game is full (30 players)</p>

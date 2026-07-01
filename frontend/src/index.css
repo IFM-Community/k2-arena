@@ -157,9 +157,16 @@ body {
   cursor: not-allowed;
 }
 
-.full-message {
-  color: #ff6b6b;
-  font-size: 0.9rem;
+.lobby-controls {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.waiting-message {
+  color: #aaa;
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-top: 1rem;
 }
 
 .question-screen {

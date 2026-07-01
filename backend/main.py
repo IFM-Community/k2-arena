@@ -160,7 +160,11 @@ async def get_root():
 async def connect(sid, environ):
     print(f"Client connected: {sid}")
     if game.state == GameState.LOBBY:
-        sio.emit("lobby_state", {"players": game.get_player_list(), "is_host": sid == game.host_sid})
+        sio.emit("lobby_state", {
+            "players": game.get_player_list(),
+            "is_host": sid == game.host_sid,
+            "room_exists": game.host_sid is not None,
+        })
     else:
         sio.emit("game_running_state", {
             "is_observer": True,
@@ -192,19 +196,15 @@ async def join_lobby(sid, data):
 
     if is_new_player:
         game.players[sid] = Player(sid, username)
+        # Assign host automatically if no host set yet
+        if game.host_sid is None:
+            game.host_sid = sid
     
     player = game.players[sid]
-    emit_to_all("lobby_update", {"players": game.get_player_list()})
+    is_host = sid == game.host_sid
     
-    await sio.emit("lobby_joined", {"player": player.to_dict(), "is_host": sid == game.host_sid}, to=sid)
-
-
-@sio.event
-async def set_host(sid, data):
-    if game.state != GameState.LOBBY:
-        return
-    game.host_sid = sid
-    await sio.emit("host_set", {"host": game.players[sid].to_dict()}, to=sid)
+    emit_to_all("lobby_update", {"players": game.get_player_list()})
+    await sio.emit("lobby_joined", {"player": player.to_dict(), "is_host": is_host, "room_exists": True}, to=sid)
 
 
 @sio.event
