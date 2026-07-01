@@ -3,5 +3,7 @@ backend = "python"
 params = { "railwaypythonxref" = "3.11" }
 
 [deploy]
-build = "npm run build"
-buildDir = "frontend"
+build = "cd frontend && npm install && npm run build && cp -r dist ../backend/static"
+
+[postBuildCommand]
+command = "echo 'Build complete'"
