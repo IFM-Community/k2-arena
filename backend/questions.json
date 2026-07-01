@@ -10,135 +10,136 @@
     ],
     "correct_answer": 0,
     "max_points": 0,
-    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society.",
-    "is_tutorial": true
+    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society."
   },
   {
     "id": 1,
-    "question": "Q1. Where and when did IFM officially launch its Silicon Valley lab?",
+    "question": "Q1. In which city is IFM's Silicon Valley lab located, and when did it launch?",
     "options": [
-      "Mountain View, June 2025",
-      "San Francisco, March 2025",
+      "Palo Alto, April 2025",
+      "Mountain View, March 2025",
       "Sunnyvale, May 2025",
-      "Palo Alto, April 2025"
+      "San Francisco, June 2025"
     ],
     "correct_answer": 2,
     "max_points": 1000,
-    "explanation": "IFM officially launched its Silicon Valley lab in Sunnyvale, California in May 2025."
+    "explanation": "IFM's Silicon Valley lab is located in Sunnyvale, California, and launched in May 2025."
   },
   {
     "id": 2,
-    "question": "Q2. IFM has three research hubs around the world. Which city is NOT one of them?",
+    "question": "Q2. IFM operates three research hubs worldwide. Which city is NOT one of them?",
     "options": [
       "Abu Dhabi",
-      "Silicon Valley",
       "Paris",
+      "Silicon Valley",
       "London"
     ],
     "correct_answer": 3,
     "max_points": 1000,
-    "explanation": "IFM has research hubs in Abu Dhabi, Silicon Valley, and Paris, not London."
+    "explanation": "IFM has research hubs in Abu Dhabi, Paris, and Silicon Valley — not London."
   },
   {
     "id": 3,
-    "question": "Q3. Jais is IFM's flagship Arabic LLM. What is it named after?",
+    "question": "Q3. JAIS, IFM's flagship Arabic LLM, takes its name from what?",
     "options": [
-      "A famous Arab poet",
-      "The UAE's highest mountain",
-      "The Arabic word for \"excellence\"",
-      "The founder of MBZUAI"
+      "An influential classical Arabic poet",
+      "The highest mountain in the UAE",
+      "The Arabic word meaning \"wisdom\"",
+      "The founding chancellor of MBZUAI"
     ],
     "correct_answer": 1,
     "max_points": 1000,
-    "explanation": "Jais is named after Jebel Jais, the highest mountain in the UAE, symbolizing reaching new heights in Arabic AI."
+    "explanation": "JAIS is named after Jebel Jais, the highest mountain in the UAE, symbolizing reaching new heights in Arabic AI."
   },
   {
     "id": 4,
-    "question": "Q4. IFM built PAN, a world model. What is a world model?",
+    "question": "Q4. IFM's PAN is described as a \"world model.\" What is a world model?",
     "options": [
-      "A multimodal system that generates short, isolated video clips from text",
-      "A simulation engine that only models physical environments for robotics",
-      "A large language model fine-tuned on global multilingual datasets",
-      "An AI that reasons, predicts, and simulates how the world changes over time, enabling planning in complex environments like autonomous driving"
-    ],
-    "correct_answer": 3,
-    "max_points": 1000,
-    "explanation": "A world model is AI that reasons, predicts, and simulates how the world changes over time, enabling planning in complex environments."
-  },
-  {
-    "id": 5,
-    "question": "Q5. K2 Think V3 has 375 billion parameters. That puts it in the same scale class as which of the following?",
-    "options": [
-      "GPT-2 and early BERT models",
-      "Small open-source models like Llama 7B",
-      "Calculator software from the 1990s",
-      "Frontier models from OpenAI, Anthropic, and DeepSeek"
-    ],
-    "correct_answer": 3,
-    "max_points": 1000,
-    "explanation": "With 375 billion parameters, K2 Think V3 is in the same scale class as frontier models from OpenAI, Anthropic, and DeepSeek."
-  },
-  {
-    "id": 6,
-    "question": "Q6. The smallest Jais model is available on Hugging Face. Approximately how large is it to download?",
-    "options": [
-      "500 MB",
-      "5 GB",
-      "50 GB",
-      "2 GB"
-    ],
-    "correct_answer": 1,
-    "max_points": 1000,
-    "explanation": "The smallest Jais model is approximately 5 GB to download from Hugging Face."
-  },
-  {
-    "id": 7,
-    "question": "Q7. PAN is designed to help advance which of the following real-world fields?",
-    "options": [
-      "Social media content moderation",
-      "Online retail recommendation engines",
-      "Robotics, autonomous systems, and decision-support research",
-      "Financial fraud detection only"
-    ],
-    "correct_answer": 2,
-    "max_points": 1000,
-    "explanation": "PAN is designed to advance robotics, autonomous systems, and decision-support research."
-  },
-  {
-    "id": 8,
-    "question": "Q8. Which of the following is something K2 Think V3 is known to do especially well?",
-    "options": [
-      "Finding its own errors and fixing them during task execution",
-      "Generating photorealistic images from text",
-      "Real-time voice translation between Arabic dialects",
-      "Training new models from scratch autonomously"
+      "A system that simulates how an environment changes over time, enabling prediction and planning",
+      "A language model trained on text from every country to eliminate cultural bias",
+      "A tool that generates short, standalone video clips from written prompts",
+      "A rendering engine built to produce photorealistic 3D graphics for games"
     ],
     "correct_answer": 0,
     "max_points": 1000,
-    "explanation": "K2 Think V3 is known for finding its own errors and fixing them during task execution."
+    "explanation": "A world model is a system that simulates how an environment changes over time, enabling prediction and planning in complex real-world scenarios."
+  },
+  {
+    "id": 5,
+    "question": "Q5. Roughly how many parameters does K2 Think V3 have?",
+    "options": [
+      "7 billion",
+      "70 billion",
+      "375 billion",
+      "2 trillion"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000,
+    "explanation": "K2 Think V3 has 375 billion parameters, placing it among the largest frontier models in the world."
+  },
+  {
+    "id": 6,
+    "question": "Q6. The smallest model in the Jais family has 8 billion parameters. At standard 16-bit precision, roughly how much disk space does it need?",
+    "options": [
+      "About 2 GB",
+      "About 8 GB",
+      "About 16 GB",
+      "About 64 GB"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000,
+    "explanation": "At standard 16-bit (2 bytes per parameter) precision, an 8 billion parameter model requires approximately 16 GB of disk space."
+  },
+  {
+    "id": 7,
+    "question": "Q7. PAN is intended to advance research in which real-world domain?",
+    "options": [
+      "Real-time speech translation across languages",
+      "Robotics, autonomous systems, and decision-support",
+      "Social media content recommendation",
+      "Automated stock and derivatives trading"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000,
+    "explanation": "PAN is designed to advance robotics, autonomous systems, and decision-support research by modeling how the physical world evolves over time."
+  },
+  {
+    "id": 8,
+    "question": "Q8. Which task is K2 Think V3 particularly strong at?",
+    "options": [
+      "Catching its own mistakes and correcting them while completing a task",
+      "Recalling breaking news from the past day without using a search tool",
+      "Running fully autonomously for days across hundreds of chained steps",
+      "Producing flawless code for a large, sprawling multi-file codebase in one attempt"
+    ],
+    "correct_answer": 0,
+    "max_points": 1000,
+    "explanation": "K2 Think V3 is particularly strong at catching its own mistakes and correcting them while completing tasks, demonstrating advanced reasoning capabilities."
   },
   {
     "id": 9,
-    "question": "Q9. Which of the following best describes a successful use case for K2 Think V3?",
+    "question": "Q9. Jais was built by a three-way collaboration. Which three organizations?",
     "options": [
-      "Summarizing a single paragraph into one sentence",
-      "Translating a document from English to Arabic in real time",
-      "Reading a long document, identifying gaps, and producing a structured plan with correct code",
-      "Generating an image based on a detailed text description"
+      "MBZUAI, Google DeepMind, and Cerebras",
+      "MBZUAI, OpenAI, and G42",
+      "MBZUAI, Inception, and Cerebras",
+      "MBZUAI, Microsoft, and Hugging Face"
     ],
     "correct_answer": 2,
-    "max_points": 1000
+    "max_points": 1000,
+    "explanation": "Jais was built through a three-way collaboration between MBZUAI, Inception (a G42 company), and Cerebras."
   },
   {
     "id": 10,
-    "question": "Q10. Jais was trained on the largest Arabic-first dataset ever assembled. Who were the three organizations behind it?",
+    "question": "Q10. Which is the best-suited use case for K2 Think V3?",
     "options": [
-      "MBZUAI, Google DeepMind, and Cerebras",
-      "MBZUAI, Inception, and Cerebras",
-      "MBZUAI, OpenAI, and G42",
-      "MBZUAI, Microsoft, and Hugging Face"
+      "Independently running a multi-week project with no human oversight",
+      "Reading a long technical document, spotting gaps, and drafting a structured plan with working code",
+      "Delivering a final medical diagnosis without any human review",
+      "Answering questions about today's live events without any search tools"
     ],
     "correct_answer": 1,
-    "max_points": 1000
+    "max_points": 1000,
+    "explanation": "K2 Think V3 excels at reading long documents, identifying gaps, and producing structured plans with working code — ideal for complex reasoning tasks with human oversight."
   }
 ]
