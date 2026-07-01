@@ -1,132 +1,142 @@
 [
   {
+    "id": "tutorial",
+    "question": "Tutorial. What does IFM stand for?",
+    "options": [
+      "International Foundation for Machines",
+      "Institute of Foundation Models",
+      "Integrated Framework for Multimodals",
+      "Institute of Future Machines"
+    ],
+    "correct_answer": 1,
+    "max_points": 0,
+    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society."
+  },
+  {
     "id": 1,
-    "question": "What is IFM's primary mission?",
+    "question": "Q1. Arabic accounts for how much of the world's online content, despite having 400 million speakers?",
     "options": [
-      "To develop the world's largest supercomputer",
-      "To advance AI for the benefit of society through foundation models",
-      "To create the first quantum computer",
-      "To build a global network of AI data centers"
-    ],
-    "correct_answer": 1,
-    "max_points": 1000,
-    "explanation": "IFM's mission is to advance AI for the benefit of society through the development of foundation models that are open, transparent, and accessible."
-  },
-  {
-    "id": 2,
-    "question": "Which of these models was developed by IFM?",
-    "options": [
-      "GPT-4",
-      "Llama 3",
-      "K2 1",
-      "Bard"
-    ],
-    "correct_answer": 2,
-    "max_points": 1000,
-    "explanation": "K2 1 is IFM's flagship large language model, released in 2023. It is open-source and represents IFM's commitment to democratizing AI."
-  },
-  {
-    "id": 3,
-    "question": "Which language does IFM's JAIS model specialize in?",
-    "options": [
-      "French",
-      "Arabic",
-      "Mandarin Chinese",
-      "Russian"
-    ],
-    "correct_answer": 1,
-    "max_points": 1000,
-    "explanation": "JAIS is a model specifically designed for the Arabic language, addressing the gap in AI systems that support Arabic speakers worldwide."
-  },
-  {
-    "id": 4,
-    "question": "IFM is headquartered in which country?",
-    "options": [
-      "United States",
-      "United Kingdom",
-      "United Arab Emirates",
-      "Saudi Arabia"
-    ],
-    "correct_answer": 2,
-    "max_points": 1000,
-    "explanation": "IFM is based in Abu Dhabi, United Arab Emirates, and is a key part of the UAE's AI Strategy 2031."
-  },
-  {
-    "id": 5,
-    "question": "What is a 'foundation model'?",
-    "options": [
-      "An AI model that can be fine-tuned for many tasks",
-      "A model that requires no training data",
-      "The base version of any AI system",
-      "A model that only works on one specific task"
-    ],
-    "correct_answer": 0,
-    "max_points": 1000,
-    "explanation": "Foundation models are large AI models trained on broad data that can be adapted to many different tasks through fine-tuning or prompting."
-  },
-  {
-    "id": 6,
-    "question": "What is one of the key principles IFM follows?",
-    "options": [
-      "All models are proprietary and closed-source",
-      "Models must be developed in secrecy",
-      "Openness and transparency in AI development",
-      "Exclusivity and restricted access"
-    ],
-    "correct_answer": 2,
-    "max_points": 1000,
-    "explanation": "IFM is committed to open-source principles, making its models and research publicly available to foster innovation."
-  },
-  {
-    "id": 7,
-    "question": "Which organization does IFM collaborate with extensively?",
-    "options": [
-      "NASA",
-      "MBZUAI (Mohamed bin Zayed University of Artificial Intelligence)",
-      "MIT",
-      "Google"
-    ],
-    "correct_answer": 1,
-    "max_points": 1000,
-    "explanation": "IFM has a close partnership with MBZUAI, the world's first graduate-level AI university, located in Abu Dhabi."
-  },
-  {
-    "id": 8,
-    "question": "Why is IFM's focus on Arabic language AI significant?",
-    "options": [
-      "Arabic is the most commercially valuable language",
-      "To ensure AI benefits are accessible to Arabic speakers globally",
-      "It's easier to train models in Arabic",
-      "Arabic requires less computing power"
-    ],
-    "correct_answer": 1,
-    "max_points": 1000,
-    "explanation": "By focusing on Arabic, IFM ensures that the benefits of AI are accessible to the 400+ million Arabic speakers worldwide who have been underserved by AI."
-  },
-  {
-    "id": 9,
-    "question": "What year did IFM release K2 1?",
-    "options": [
-      "2021",
-      "2022",
-      "2023",
-      "2024"
-    ],
-    "correct_answer": 2,
-    "max_points": 1000,
-    "explanation": "K2 1 was released in 2023 and was met with widespread adoption from the open-source AI community."
-  },
-  {
-    "id": 10,
-    "question": "What does IFM's PAN model specialize in?",
-    "options": [
-      "Protein folding prediction",
-      "Image generation",
-      "Multilingual text understanding",
-      "Arabic and English code processing"
+      "5%",
+      "3%",
+      "2%",
+      "Less than 1%"
     ],
     "correct_answer": 3,
     "max_points": 1000,
-    "explanation": "PAN is a model designed for code understanding and generation in both Arabic and English, supporting software development in the region."
+    "explanation": "Despite having 400 million speakers, Arabic represents less than 1% of the world's online content, highlighting the need for Arabic AI development."
+  },
+  {
+    "id": 2,
+    "question": "Q2. Where did IFM officially launch its Silicon Valley lab, and in what month and year?",
+    "options": [
+      "Stanford University, March 2025",
+      "Google Campus, April 2025",
+      "Computer History Museum in Mountain View, May 2025",
+      "MIT Media Lab, June 2025"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000,
+    "explanation": "IFM launched its Silicon Valley lab at the Computer History Museum in Mountain View in May 2025."
+  },
+  {
+    "id": 3,
+    "question": "Q3. IFM has research hubs in three cities. Which of the following is NOT one of them?",
+    "options": [
+      "Abu Dhabi",
+      "Paris",
+      "Silicon Valley",
+      "London"
+    ],
+    "correct_answer": 3,
+    "max_points": 1000,
+    "explanation": "IFM has research hubs in Abu Dhabi, Paris, and Silicon Valley — not London."
+  },
+  {
+    "id": 4,
+    "question": "Q4. JAIS is IFM's flagship Arabic LLM. What is it named after?",
+    "options": [
+      "A famous Arab poet",
+      "The UAE's highest mountain, Jebel Jais",
+      "The Arabic word for \"excellence\"",
+      "The founder of MBZUAI"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000,
+    "explanation": "JAIS is named after Jebel Jais, the highest mountain in the UAE, symbolizing reaching new heights in Arabic AI."
+  },
+  {
+    "id": 5,
+    "question": "Q5. How many Arabic speakers worldwide does JAIS aim to serve?",
+    "options": [
+      "100 million",
+      "200 million",
+      "300 million",
+      "400 million"
+    ],
+    "correct_answer": 3,
+    "max_points": 1000,
+    "explanation": "JAIS aims to serve 400 million Arabic speakers worldwide, addressing the significant gap in Arabic language AI."
+  },
+  {
+    "id": 6,
+    "question": "Q6. How many parameters does the latest version of JAIS (Jais 2) have?",
+    "options": [
+      "13 billion",
+      "30 billion",
+      "70 billion",
+      "375 billion"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000,
+    "explanation": "Jais 2, the latest version of IFM's Arabic LLM, has 70 billion parameters."
+  },
+  {
+    "id": 7,
+    "question": "Q7. When was the original JAIS 13B model first released?",
+    "options": [
+      "January 2023",
+      "August 2023",
+      "March 2024",
+      "November 2022"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000,
+    "explanation": "The original JAIS 13B model was released in August 2023."
+  },
+  {
+    "id": 8,
+    "question": "Q8. What is unique about IFM's LLM360 open-source approach compared to most AI labs?",
+    "options": [
+      "They only release model weights",
+      "They open-source the full training process: code, data, checkpoints, and intermediate results",
+      "They only release evaluation benchmarks",
+      "They release models 12 months after internal deployment"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000,
+  },
+  {
+    "id": 9,
+    "question": "Q9. PAN is IFM's world model. What makes it fundamentally different from a standard video generation tool?",
+    "options": [
+      "It only generates text descriptions of scenes",
+      "It is faster than any other video generator",
+      "It maintains scene continuity, follows language instructions, and reasons about how the world changes over time",
+      "It can only simulate indoor environments"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000
+  },
+  {
+    "id": 10,
+    "question": "Q10. JAIS 2 was trained on the largest Arabic-first dataset ever assembled. Who were the three organizations behind it?",
+    "options": [
+      "MBZUAI, Google DeepMind, and Cerebras",
+      "MBZUAI, Inception, and Cerebras",
+      "MBZUAI, OpenAI, and G42",
+      "MBZUAI, Microsoft, and Hugging Face"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000
   }
 ]
