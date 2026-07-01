@@ -6,7 +6,9 @@ from typing import Dict, Optional
 from enum import Enum
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
+import os
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 import socketio
 import uvicorn
@@ -136,31 +138,14 @@ def get_emissions_for_host() -> dict:
 
 @app.get("/")
 async def get_root():
-    html_content = """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>K2 Arena - Lobby</title>
-        <style>
-            body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: white; }
-            .container { text-align: center; }
-            h1 { font-size: 3.5rem; margin-bottom: 0.5rem; color: #00d9ff; text-shadow: 0 0 20px rgba(0,217,255,0.5); }
-            .subtitle { font-size: 1.2rem; color: #aaa; margin-bottom: 2rem; }
-            .url { background: rgba(255,255,255,0.1); padding: 1rem 2rem; border-radius: 30px; display: inline-block; font-family: monospace; }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>K2 Arena</h1>
-            <p class="subtitle">Game Server Running</p>
-            <div class="url">Open index.html in your browser</div>
-        </div>
-    </body>
-    </html>
-    """
-    return HTMLResponse(content=html_content)
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    index_path = os.path.join(static_dir, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return HTMLResponse("""
+    <h1>K2 Arena - Server Running</h1>
+    <p>The frontend is building. Please wait and refresh.</p>
+    """)
 
 
 @sio.event
@@ -380,6 +365,17 @@ async def reset_game():
     return {"status": "ok"}
 
 
+@app.get("/{full_path:path}")
+async def serve_spa(full_path: str):
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    index_path = os.path.join(static_dir, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return HTMLResponse("<h1>Not Found</h1>", status_code=404)
+
+
 if __name__ == "__main__":
-    app.mount("/static", StaticFiles(directory="static"), name="static")
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+    if os.path.exists(static_dir):
+        app.mount("/static", StaticFiles(directory=static_dir), name="static")
     uvicorn.run(sio_app, host="0.0.0.0", port=8000)
