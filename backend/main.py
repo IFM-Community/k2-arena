@@ -328,19 +328,24 @@ async def submit_answer(sid, data):
 async def end_question():
     if game.state != GameState.QUESTION:
         return
-    
+
     emit_to_all("question_ended", {
         "correct_answer": game.current_question.correct_answer if game.current_question else None,
         "leaderboard": game.get_leaderboard(),
     })
-    
+
     game.current_question_index += 1
     game.state = GameState.RESULTS
     game.is_timer_running = False
-    
+
     emit_to_all("state_changed", {"state": GameState.RESULTS.value})
-    await sio.sleep(5)
-    
+
+
+@sio.event
+async def advance_question(sid, data):
+    if sid != game.host_sid or game.state != GameState.RESULTS:
+        return
+
     if game.current_question_index < len(game.questions):
         game.state = GameState.QUESTION
         emit_to_all("state_changed", {"state": GameState.QUESTION.value})

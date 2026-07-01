@@ -18,6 +18,7 @@ function App() {
   const [leaderboard, setLeaderboard] = useState([])
   const [host, setHost] = useState(null)
   const [pickedAnswer, setPickedAnswer] = useState(null)
+  const [correctAnswerIndex, setCorrectAnswerIndex] = useState(null)
   const [isHost, setIsHost] = useState(false)
   const [isObserver, setIsObserver] = useState(false)
   const [observerMessage, setObserverMessage] = useState('')
@@ -76,6 +77,7 @@ function App() {
       setTotalQuestions(data.total_questions)
       setCurrentQuestionIndex(0)
       setPickedAnswer(null)
+      setCorrectAnswerIndex(null)
     })
 
     newSocket.on('timer_started', (data) => {
@@ -94,6 +96,7 @@ function App() {
     newSocket.on('question_ended', (data) => {
       setGameState('results')
       setLeaderboard(data.leaderboard || [])
+      setCorrectAnswerIndex(data.correct_answer)
     })
 
     newSocket.on('next_question', (data) => {
@@ -101,6 +104,7 @@ function App() {
       setCurrentQuestion(data.current_question)
       setCurrentQuestionIndex(data.question_index)
       setPickedAnswer(null)
+      setCorrectAnswerIndex(null)
     })
 
     newSocket.on('game_finished', (data) => {
@@ -155,6 +159,12 @@ function App() {
     }
   }, [socket, gameState, pickedAnswer])
 
+  const advanceQuestion = useCallback(() => {
+    if (socket && isHost) {
+      socket.emit('advance_question', {})
+    }
+  }, [socket, isHost])
+
   return (
     <div className="app">
       {gameState === 'lobby' && (
@@ -185,6 +195,10 @@ function App() {
           question={currentQuestion}
           leaderboard={leaderboard}
           pickedAnswer={pickedAnswer}
+          correctAnswerIndex={correctAnswerIndex}
+          isHost={isHost}
+          isLastQuestion={currentQuestionIndex >= totalQuestions}
+          onAdvance={advanceQuestion}
         />
       )}
       
@@ -344,11 +358,12 @@ function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, qu
   )
 }
 
-function ResultsScreen({ question, leaderboard, pickedAnswer }) {
+function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex, isHost, isLastQuestion, onAdvance }) {
   const colors = ['#ff4757', '#2ed573', '#ffa502', '#3742fa']
   const letters = ['A', 'B', 'C', 'D']
   const answered = pickedAnswer !== null && pickedAnswer !== undefined
-  const wasCorrect = answered && pickedAnswer === question.correct_answer
+  const hasCorrectAnswer = correctAnswerIndex !== null && correctAnswerIndex !== undefined
+  const wasCorrect = answered && hasCorrectAnswer && pickedAnswer === correctAnswerIndex
 
   return (
     <div className="screen results-screen">
@@ -360,10 +375,12 @@ function ResultsScreen({ question, leaderboard, pickedAnswer }) {
 
       <div className="recap-question">
         <div className="recap-question-text">{question.question}</div>
-        <div className="recap-answer" style={{ backgroundColor: colors[question.correct_answer] }}>
-          <span className="recap-answer-letter">{letters[question.correct_answer]}</span>
-          {question.options[question.correct_answer]}
-        </div>
+        {hasCorrectAnswer && (
+          <div className="recap-answer" style={{ backgroundColor: colors[correctAnswerIndex] }}>
+            <span className="recap-answer-letter">{letters[correctAnswerIndex]}</span>
+            {question.options[correctAnswerIndex]}
+          </div>
+        )}
         {answered && !wasCorrect && (
           <div className="your-answer">Your answer: {question.options[pickedAnswer]}</div>
         )}
@@ -386,6 +403,16 @@ function ResultsScreen({ question, leaderboard, pickedAnswer }) {
           {question.explanation}
         </div>
       )}
+
+      <div className="advance-controls">
+        {isHost ? (
+          <button className="join-btn" onClick={onAdvance}>
+            {isLastQuestion ? 'Show Final Results' : 'Next Question'}
+          </button>
+        ) : (
+          <p className="waiting-message">Waiting for host to continue...</p>
+        )}
+      </div>
     </div>
   )
 }
