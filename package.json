@@ -1,0 +1,11 @@
+{
+  "name": "k2-arena-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build && cp -r dist ../backend/static"
+  },
+  "devDependencies": {
+    "vite": "^5.0.8"
+  }
+}
