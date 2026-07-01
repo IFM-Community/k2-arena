@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { io } from 'socket.io-client'
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:8000'
@@ -10,7 +10,9 @@ function App() {
   const [players, setPlayers] = useState([])
   const [observers, setObservers] = useState([])
   const [currentQuestion, setCurrentQuestion] = useState(null)
-  const [questionTimer, setQuestionTimer] = useState(null)
+  const [timerTotal, setTimerTotal] = useState(20)
+  const [timeRemaining, setTimeRemaining] = useState(20)
+  const timerStartRef = useRef(null)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [leaderboard, setLeaderboard] = useState([])
@@ -22,6 +24,16 @@ function App() {
   const [scores, setScores] = useState({})
   const [roomExists, setRoomExists] = useState(false)
   const [lobbyJoined, setLobbyJoined] = useState(false)
+
+  useEffect(() => {
+    if (gameState !== 'question') return
+    const interval = setInterval(() => {
+      if (timerStartRef.current == null) return
+      const elapsed = (Date.now() - timerStartRef.current) / 1000
+      setTimeRemaining(Math.max(0, timerTotal - elapsed))
+    }, 100)
+    return () => clearInterval(interval)
+  }, [gameState, timerTotal])
 
   useEffect(() => {
     const newSocket = io(SOCKET_URL, {
@@ -67,7 +79,9 @@ function App() {
     })
 
     newSocket.on('timer_started', (data) => {
-      setQuestionTimer(data.seconds)
+      setTimerTotal(data.seconds)
+      setTimeRemaining(data.seconds)
+      timerStartRef.current = Date.now()
     })
 
     newSocket.on('answer_submitted', (data) => {
@@ -79,6 +93,7 @@ function App() {
 
     newSocket.on('question_ended', (data) => {
       setGameState('results')
+      setLeaderboard(data.leaderboard || [])
     })
 
     newSocket.on('next_question', (data) => {
@@ -130,7 +145,11 @@ function App() {
   }, [socket, isHost])
 
   const submitAnswer = useCallback((answerIndex) => {
-    if (socket && gameState === 'question' && pickedAnswer === null) {
+    if (!socket || gameState !== 'question') return
+    if (pickedAnswer === answerIndex) {
+      setPickedAnswer(null)
+      socket.emit('submit_answer', { answer: null })
+    } else {
       setPickedAnswer(answerIndex)
       socket.emit('submit_answer', { answer: answerIndex })
     }
@@ -152,7 +171,8 @@ function App() {
       {gameState === 'question' && (
         <QuestionScreen
           question={currentQuestion}
-          timer={questionTimer}
+          timer={timeRemaining}
+          totalTime={timerTotal}
           onAnswer={submitAnswer}
           pickedAnswer={pickedAnswer}
           questionIndex={currentQuestionIndex + 1}
@@ -225,7 +245,7 @@ function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStart
     <div className="screen lobby-screen">
       <div className="title-gradient">
         <h1>K2 Arena</h1>
-        <p className="subtitle">A Kahoot-style Quiz Experience</p>
+        <p className="subtitle">Test Your Knowledge of IFM's Top 10</p>
       </div>
       
       <div className="lobby-content">
@@ -269,7 +289,7 @@ function JoinForm({ onJoin, roomExists, playersCount }) {
         className="join-btn"
         disabled={!name.trim() || playersCount >= 30}
       >
-        {roomExists ? 'Join Game' : 'Create Room'}
+        {roomExists ? 'Join Room' : 'Create Room'}
       </button>
       {playersCount >= 30 && (
         <p className="full-message">Game is full (30 players)</p>
@@ -278,38 +298,39 @@ function JoinForm({ onJoin, roomExists, playersCount }) {
   )
 }
 
-function QuestionScreen({ question, timer, onAnswer, pickedAnswer, questionIndex, totalQuestions }) {
+function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, questionIndex, totalQuestions }) {
   if (!question) return <div>Loading question...</div>
 
   const colors = ['#ff4757', '#2ed573', '#ffa502', '#3742fa']
   const letters = ['A', 'B', 'C', 'D']
+  const pct = totalTime > 0 ? Math.max(0, Math.min(100, (timer / totalTime) * 100)) : 0
 
   return (
     <div className="screen question-screen">
       <div className="timer-container">
-        <div className="timer-bar" style={{ 
-          width: `${(timer / (timer > 0 ? timer : 20)) * 100}%`
-        }} />
-        <div className="timer-value">{timer}s</div>
+        <div className="timer-bar-track">
+          <div className="timer-bar" style={{ width: `${pct}%` }} />
+        </div>
+        <div className="timer-value">{timer.toFixed(1)}s</div>
       </div>
-      
+
       <div className="question-header">
         <span className="question-number">Question {questionIndex} / {totalQuestions}</span>
       </div>
-      
+
       <div className="question-text">
         {question.question}
       </div>
-      
+
       <div className="answer-options">
         {question.options.map((option, index) => (
           <button
             key={index}
-            className={`answer-tile ${pickedAnswer === index ? 'locked' : ''} ${'answer-' + letters[index].toLowerCase()}`}
+            className={`answer-tile ${pickedAnswer === index ? 'selected' : ''} ${'answer-' + letters[index].toLowerCase()}`}
             onClick={() => onAnswer(index)}
-            disabled={pickedAnswer !== null}
             style={{ backgroundColor: colors[index] }}
           >
+            {pickedAnswer === index && <div className="selected-badge">✓</div>}
             <div className="option-letter">{letters[index]}</div>
             <div className="option-text">{option}</div>
           </button>
@@ -325,25 +346,26 @@ function ResultsScreen({ question, leaderboard, players }) {
   return (
     <div className="screen results-screen">
       <div className="results-header">Question Results</div>
-      
+
       <div className="correct-answer-display">
         <h2>Correct Answer:</h2>
         <div className="correct-option" style={{ backgroundColor: colors[question.correct_answer] }}>
           {question.options[question.correct_answer]}
         </div>
       </div>
-      
+
       <div className="leaderboard-preview">
-        <h3>Leaderboard</h3>
+        <h3>Leaderboard — Top 10</h3>
         <ul>
-          {leaderboard.slice(0, 5).map((p, i) => (
+          {leaderboard.slice(0, 10).map((p, i) => (
             <li key={i} className={`leaderboard-item ${i === 0 ? 'winner' : ''}`}>
-              #{p.rank} {p.username} — {p.score} pts
+              <span>#{p.rank} {p.username}</span>
+              <span>{p.score} pts total</span>
             </li>
           ))}
         </ul>
       </div>
-      
+
       <div className="explanation">
         {question.explanation}
       </div>

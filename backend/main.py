@@ -165,18 +165,18 @@ async def get_root():
 async def connect(sid, environ):
     print(f"Client connected: {sid}")
     if game.state == GameState.LOBBY:
-        sio.emit("lobby_state", {
+        await sio.emit("lobby_state", {
             "players": game.get_player_list(),
             "is_host": sid == game.host_sid,
             "room_exists": game.host_sid is not None,
-        })
+        }, to=sid)
     else:
-        sio.emit("game_running_state", {
+        await sio.emit("game_running_state", {
             "is_observer": True,
             "message": "Game in progress — you joined late, sit back and watch!",
             "current_question": game.get_current_question_for_player(),
             "leaderboard": game.get_leaderboard()
-        })
+        }, to=sid)
 
 
 @sio.event
@@ -255,41 +255,52 @@ async def start_question_timer():
 async def submit_answer(sid, data):
     if game.state != GameState.QUESTION or game.is_timer_running is False:
         return
-    
+
     player = game.players.get(sid)
     if not player or player.is_observer:
         return
-    
+
+    question = game.current_question
+    if question is None:
+        return
+
+    # Undo any previous selection's points for this question so re-picking
+    # or unselecting doesn't double-count.
+    previous = player.answers.get(game.current_question_index)
+    if previous:
+        player.score -= previous["points"]
+
     answer = data.get("answer")
     if answer is None:
+        # Unselecting: clear their answer for this question entirely.
+        player.answers.pop(game.current_question_index, None)
+        emit_to_all("answer_submitted", {
+            "player": player.to_dict(),
+            "question_id": game.current_question_index,
+            "points": None,
+        })
         return
-    
-    if player.sid in game.players:
-        question = game.current_question
-        if question is None:
-            return
-        
-        if game.current_question_index not in player.answers:
-            time_fraction = game.question_timer / game.seconds_per_question if game.seconds_per_question > 0 else 0
-            points = int(question.max_points * max(0.1, time_fraction))
-            
-            if answer == question.correct_answer:
-                player.score += points
-            else:
-                points = 0
-            
-            player.answers[game.current_question_index] = {
-                "option": answer,
-                "correct": answer == question.correct_answer,
-                "points": points,
-                "time_remaining": game.question_timer,
-            }
-            
-            emit_to_all("answer_submitted", {
-                "player": player.to_dict(),
-                "question_id": game.current_question_index,
-                "points": points,
-            })
+
+    time_fraction = game.question_timer / game.seconds_per_question if game.seconds_per_question > 0 else 0
+    points = int(question.max_points * max(0.1, time_fraction))
+
+    if answer == question.correct_answer:
+        player.score += points
+    else:
+        points = 0
+
+    player.answers[game.current_question_index] = {
+        "option": answer,
+        "correct": answer == question.correct_answer,
+        "points": points,
+        "time_remaining": game.question_timer,
+    }
+
+    emit_to_all("answer_submitted", {
+        "player": player.to_dict(),
+        "question_id": game.current_question_index,
+        "points": points,
+    })
 
 
 async def end_question():
