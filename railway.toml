@@ -1,0 +1,12 @@
+[build]
+backend = "python"
+
+[start]
+backend = "uvicorn backend.main:app --host 0.0.0.0 --port 8000"
+
+[processes]
+backend = "uvicorn backend.main:app --host 0.0.0.0 --port 8000"
+
+[deploy]
+build = "vite build"
+buildDir = "frontend"

@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "question": "What is IFM's primary mission?",
+    "options": [
+      "To develop the world's largest supercomputer",
+      "To advance AI for the benefit of society through foundation models",
+      "To create the first quantum computer",
+      "To build a global network of AI data centers"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000,
+    "explanation": "IFM's mission is to advance AI for the benefit of society through the development of foundation models that are open, transparent, and accessible."
+  },
+  {
+    "id": 2,
+    "question": "Which of these models was developed by IFM?",
+    "options": [
+      "GPT-4",
+      "Llama 3",
+      "K2 1",
+      "Bard"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000,
+    "explanation": "K2 1 is IFM's flagship large language model, released in 2023. It is open-source and represents IFM's commitment to democratizing AI."
+  },
+  {
+    "id": 3,
+    "question": "Which language does IFM's JAIS model specialize in?",
+    "options": [
+      "French",
+      "Arabic",
+      "Mandarin Chinese",
+      "Russian"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000,
+    "explanation": "JAIS is a model specifically designed for the Arabic language, addressing the gap in AI systems that support Arabic speakers worldwide."
+  },
+  {
+    "id": 4,
+    "question": "IFM is headquartered in which country?",
+    "options": [
+      "United States",
+      "United Kingdom",
+      "United Arab Emirates",
+      "Saudi Arabia"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000,
+    "explanation": "IFM is based in Abu Dhabi, United Arab Emirates, and is a key part of the UAE's AI Strategy 2031."
+  },
+  {
+    "id": 5,
+    "question": "What is a 'foundation model'?",
+    "options": [
+      "An AI model that can be fine-tuned for many tasks",
+      "A model that requires no training data",
+      "The base version of any AI system",
+      "A model that only works on one specific task"
+    ],
+    "correct_answer": 0,
+    "max_points": 1000,
+    "explanation": "Foundation models are large AI models trained on broad data that can be adapted to many different tasks through fine-tuning or prompting."
+  },
+  {
+    "id": 6,
+    "question": "What is one of the key principles IFM follows?",
+    "options": [
+      "All models are proprietary and closed-source",
+      "Models must be developed in secrecy",
+      "Openness and transparency in AI development",
+      "Exclusivity and restricted access"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000,
+    "explanation": "IFM is committed to open-source principles, making its models and research publicly available to foster innovation."
+  },
+  {
+    "id": 7,
+    "question": "Which organization does IFM collaborate with extensively?",
+    "options": [
+      "NASA",
+      "MBZUAI (Mohamed bin Zayed University of Artificial Intelligence)",
+      "MIT",
+      "Google"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000,
+    "explanation": "IFM has a close partnership with MBZUAI, the world's first graduate-level AI university, located in Abu Dhabi."
+  },
+  {
+    "id": 8,
+    "question": "Why is IFM's focus on Arabic language AI significant?",
+    "options": [
+      "Arabic is the most commercially valuable language",
+      "To ensure AI benefits are accessible to Arabic speakers globally",
+      "It's easier to train models in Arabic",
+      "Arabic requires less computing power"
+    ],
+    "correct_answer": 1,
+    "max_points": 1000,
+    "explanation": "By focusing on Arabic, IFM ensures that the benefits of AI are accessible to the 400+ million Arabic speakers worldwide who have been underserved by AI."
+  },
+  {
+    "id": 9,
+    "question": "What year did IFM release K2 1?",
+    "options": [
+      "2021",
+      "2022",
+      "2023",
+      "2024"
+    ],
+    "correct_answer": 2,
+    "max_points": 1000,
+    "explanation": "K2 1 was released in 2023 and was met with widespread adoption from the open-source AI community."
+  },
+  {
+    "id": 10,
+    "question": "What does IFM's PAN model specialize in?",
+    "options": [
+      "Protein folding prediction",
+      "Image generation",
+      "Multilingual text understanding",
+      "Arabic and English code processing"
+    ],
+    "correct_answer": 3,
+    "max_points": 1000,
+    "explanation": "PAN is a model designed for code understanding and generation in both Arabic and English, supporting software development in the region."
+  }
+]
