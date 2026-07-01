@@ -256,7 +256,7 @@ function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStart
         
         <div className="lobby-content">
           <div className="players-list">
-            <h3>Players in Lobby ({players.length}/30)</h3>
+            <h3>Players in Lobby ({players.length}/50)</h3>
             <ul>
               {players.map((p, i) => (
                 <li key={i} className="player-item">{p.username}{isHost && p.username === 'You' ? ' (You)' : ''}</li>
@@ -266,14 +266,14 @@ function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStart
           
           <div className="lobby-controls">
             {isHost ? (
-              <button 
+              <button
                 className="join-btn"
                 onClick={() => onStartGame(20)}
               >
-                Start Game (20s per question)
+                Start Game
               </button>
             ) : (
-              <p className="waiting-message">Waiting for host to start the game...</p>
+              <p className="waiting-message">The Arena is Filling Up...</p>
             )}
           </div>
         </div>
@@ -290,7 +290,7 @@ function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStart
       
       <div className="lobby-content">
         <div className="players-list">
-          <h3>Players in Lobby ({players.length}/30)</h3>
+          <h3>Players in Lobby ({players.length}/50)</h3>
           <ul>
             {players.map((p, i) => (
               <li key={i} className="player-item">{p.username}</li>
@@ -309,7 +309,7 @@ function JoinForm({ onJoin, roomExists, playersCount }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (name.trim() && playersCount < 30) {
+    if (name.trim() && playersCount < 50) {
       onJoin(name.trim())
     }
   }
@@ -327,12 +327,12 @@ function JoinForm({ onJoin, roomExists, playersCount }) {
       <button 
         type="submit" 
         className="join-btn"
-        disabled={!name.trim() || playersCount >= 30}
+        disabled={!name.trim() || playersCount >= 50}
       >
         {roomExists ? 'Join Room' : 'Create Room'}
       </button>
-      {playersCount >= 30 && (
-        <p className="full-message">Game is full (30 players)</p>
+      {playersCount >= 50 && (
+        <p className="full-message">Game is full (50 players)</p>
       )}
     </form>
   )
