@@ -5,7 +5,6 @@
     "node": "22",
     "python": "3.13"
   },
-  "buildAptPackages": ["git", "curl"],
   "steps": {
     "install-frontend": {
       "commands": [
@@ -14,7 +13,7 @@
     },
     "build-frontend": {
       "inputs": [
-        { "step": "install-frontend", "include": ["."] }
+        { "step": "install-frontend" }
       ],
       "commands": [
         "cd frontend && npm run build",
@@ -26,7 +25,7 @@
     },
     "install-python": {
       "inputs": [
-        { "step": "build-frontend", "include": ["."] }
+        { "step": "build-frontend" }
       ],
       "commands": [
         "pip install -r requirements.txt"
@@ -37,10 +36,7 @@
     }
   },
   "deploy": {
-    "base": {
-      "image": "ghcr.io/railwayapp/railpack-runtime:mise-2026.6.12"
-    },
-    "startCommand": "python -m uvicorn app:app --host 0.0.0.0 --port 8000",
+    "startCommand": "python -m uvicorn app:app --host 0.0.0.0 --port $PORT",
     "inputs": [
       { "step": "install-python", "include": ["/app"] }
     ]
