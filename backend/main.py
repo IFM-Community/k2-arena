@@ -117,10 +117,20 @@ class Game:
         self.question_timer = seconds
         self.timer_end = asyncio.get_event_loop().time() + seconds
 
-    def get_leaderboard(self):
-        scored = [(p.username, p.score) for p in self.players.values() if not p.is_observer]
-        scored.sort(key=lambda x: x[1], reverse=True)
-        return [{"rank": i + 1, "username": name, "score": score} for i, (name, score) in enumerate(scored)]
+    def get_leaderboard(self, tiebreak_question_index: Optional[int] = None):
+        players = [p for p in self.players.values() if not p.is_observer]
+
+        def sort_key(player: Player):
+            time_remaining = -1
+            if tiebreak_question_index is not None:
+                answer = player.answers.get(tiebreak_question_index)
+                if answer is not None:
+                    time_remaining = answer["time_remaining"]
+            # Higher score first, then faster response (more time remaining) first.
+            return (-player.score, -time_remaining)
+
+        ranked = sorted(players, key=sort_key)
+        return [{"rank": i + 1, "username": p.username, "score": p.score} for i, p in enumerate(ranked)]
 
     def get_answer_counts(self, question_index: int):
         counts = [0, 0, 0, 0]
@@ -325,7 +335,7 @@ async def end_question():
 
     emit_to_all("question_ended", {
         "correct_answer": game.current_question.correct_answer if game.current_question else None,
-        "leaderboard": game.get_leaderboard(),
+        "leaderboard": game.get_leaderboard(tiebreak_question_index=game.current_question_index),
         "answer_counts": game.get_answer_counts(game.current_question_index),
     })
 
