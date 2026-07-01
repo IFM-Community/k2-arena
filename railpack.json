@@ -7,7 +7,10 @@
   },
   "steps": {
     "install-frontend": {
-      "inputs": ["."],
+      "inputs": [
+        { "step": "packages:mise" },
+        { "local": true, "include": ["."] }
+      ],
       "commands": [
         "cd frontend && npm install"
       ]
@@ -16,7 +19,7 @@
       "inputs": [{ "step": "install-frontend" }],
       "commands": [
         "cd frontend && npm run build",
-        "cp -r dist /app/backend/static"
+        "cp -r frontend/dist /app/backend/static"
       ],
       "deployOutputs": [
         { "include": ["/app/backend"] }
@@ -34,6 +37,19 @@
   },
   "deploy": {
     "startCommand": "python -m uvicorn app:app --host 0.0.0.0 --port $PORT",
-    "inputs": [{ "step": "install-python", "include": ["/app"] }]
+    "inputs": [
+      {
+        "step": "install-python",
+        "include": [
+          "/app",
+          "/mise/shims",
+          "/mise/installs",
+          "/usr/local/bin/mise",
+          "/etc/mise/config.toml",
+          "/root/.local/state/mise"
+        ]
+      }
+    ],
+    "paths": ["/mise/shims"]
   }
 }
