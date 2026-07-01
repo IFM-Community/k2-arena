@@ -5,9 +5,3 @@ params = { "railwaypythonxref" = "3.11" }
 [deploy]
 build = "npm run build"
 buildDir = "frontend"
-
-[[services]]
-role = "public"
-[services.ports]
-port = 8000
-internalPort = 8080
