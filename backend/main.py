@@ -53,6 +53,22 @@ class Player:
         }
 
 
+TUTORIAL_QUESTION = {
+    "id": 0,
+    "question": "What does IFM stand for?",
+    "options": [
+        "Institute of Foundation Models",
+        "International Foundation for Machines",
+        "Institute for Machine Learning",
+        "Innovative Future Models",
+    ],
+    "correct_answer": 0,
+    "max_points": 500,
+    "explanation": "IFM stands for Institute of Foundation Models.",
+    "is_tutorial": True,
+}
+
+
 class Question:
     def __init__(self, data: dict):
         self.id = data["id"]
@@ -61,6 +77,7 @@ class Question:
         self.correct_answer = data["correct_answer"]
         self.max_points = data["max_points"]
         self.explanation = data.get("explanation", "")
+        self.is_tutorial = data.get("is_tutorial", False)
 
 
 class Game:
@@ -82,7 +99,11 @@ class Game:
         questions_path = os.path.join(base_dir, "questions.json")
         with open(questions_path, "r") as f:
             data = json.load(f)
-            self.questions = [Question(q) for q in data]
+            self.questions = [Question(TUTORIAL_QUESTION)] + [Question(q) for q in data]
+
+    @property
+    def real_question_count(self) -> int:
+        return len(self.questions) - 1
 
     @property
     def current_question(self) -> Optional[Question]:
@@ -104,6 +125,7 @@ class Game:
             "question": self.current_question.question,
             "options": self.current_question.options,
             "max_points": self.current_question.max_points,
+            "is_tutorial": self.current_question.is_tutorial,
         }
 
     def start_timer(self, seconds: int):
@@ -136,7 +158,7 @@ def get_emissions_for_host() -> dict:
         "current_question": game.get_current_question_for_player() if game.state == GameState.QUESTION else None,
         "question_timer": game.question_timer if game.state == GameState.QUESTION else None,
         "current_question_index": game.current_question_index,
-        "total_questions": len(game.questions),
+        "total_questions": game.real_question_count,
         "leaderboard": game.get_leaderboard(),
     }
 
@@ -223,7 +245,7 @@ async def start_game(sid, data):
     
     await sio.emit("game_started", {
         "current_question": game.get_current_question_for_player(),
-        "total_questions": len(game.questions),
+        "total_questions": game.real_question_count,
         "seconds_per_question": game.seconds_per_question,
     })
     
@@ -369,7 +391,7 @@ async def get_game_state():
         "current_question": game.get_current_question_for_player() if game.state == GameState.QUESTION else None,
         "question_timer": game.question_timer if game.state == GameState.QUESTION else None,
         "current_question_index": game.current_question_index,
-        "total_questions": len(game.questions),
+        "total_questions": game.real_question_count,
         "players": game.get_player_list(),
         "leaderboard": game.get_leaderboard(),
     }

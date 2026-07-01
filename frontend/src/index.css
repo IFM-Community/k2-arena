@@ -32,7 +32,8 @@ body {
   padding: clamp(0.75rem, 3vw, 2rem);
   flex: 1;
   min-height: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .title-gradient {
@@ -228,6 +229,11 @@ body {
   font-weight: bold;
 }
 
+.question-number.tutorial-badge {
+  background: rgba(255, 165, 2, 0.2);
+  color: #ffa502;
+}
+
 .question-text {
   font-size: clamp(1.1rem, 3.2vw, 2.2rem);
   text-align: center;
@@ -328,25 +334,74 @@ body {
   text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
 }
 
-.correct-answer-display {
+.result-banner {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  margin-bottom: clamp(0.5rem, 2vh, 1.2rem);
+  text-align: center;
+}
+
+.result-banner.correct {
+  background: rgba(46, 213, 115, 0.15);
+  color: #2ed573;
+  border: 2px solid #2ed573;
+}
+
+.result-banner.incorrect {
+  background: rgba(255, 71, 87, 0.15);
+  color: #ff4757;
+  border: 2px solid #ff4757;
+}
+
+.result-banner.unanswered {
+  background: rgba(255, 255, 255, 0.08);
+  color: #aaa;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.recap-question {
   text-align: center;
   margin-bottom: clamp(0.5rem, 2vh, 1.5rem);
+  max-width: 800px;
 }
 
-.correct-answer-display h2 {
-  color: #2ed573;
-  margin-bottom: 0.5rem;
+.recap-question-text {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
+  color: #fff;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
 }
 
-.correct-option {
-  display: inline-block;
-  padding: clamp(0.6rem, 2vh, 1.5rem) clamp(1rem, 4vw, 3rem);
+.recap-answer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: clamp(0.5rem, 1.8vh, 1rem) clamp(1rem, 3vw, 2rem);
   border-radius: 20px;
   color: #fff;
-  font-size: clamp(0.95rem, 2vw, 1.3rem);
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
   font-weight: bold;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.recap-answer-letter {
+  background: rgba(255, 255, 255, 0.3);
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.your-answer {
+  margin-top: 0.6rem;
+  color: #aaa;
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
 }
 
 .leaderboard-preview {

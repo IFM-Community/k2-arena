@@ -175,7 +175,7 @@ function App() {
           totalTime={timerTotal}
           onAnswer={submitAnswer}
           pickedAnswer={pickedAnswer}
-          questionIndex={currentQuestionIndex + 1}
+          questionIndex={currentQuestionIndex}
           totalQuestions={totalQuestions}
         />
       )}
@@ -184,7 +184,7 @@ function App() {
         <ResultsScreen
           question={currentQuestion}
           leaderboard={leaderboard}
-          players={players}
+          pickedAnswer={pickedAnswer}
         />
       )}
       
@@ -245,7 +245,7 @@ function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStart
     <div className="screen lobby-screen">
       <div className="title-gradient">
         <h1>K2 Arena</h1>
-        <p className="subtitle">Test Your Knowledge of IFM's Top 10</p>
+        <p className="subtitle">10 Things You Should Know About IFM</p>
       </div>
       
       <div className="lobby-content">
@@ -315,7 +315,11 @@ function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, qu
       </div>
 
       <div className="question-header">
-        <span className="question-number">Question {questionIndex} / {totalQuestions}</span>
+        {question.is_tutorial ? (
+          <span className="question-number tutorial-badge">Tutorial — Practice Question</span>
+        ) : (
+          <span className="question-number">Question {questionIndex} / {totalQuestions}</span>
+        )}
       </div>
 
       <div className="question-text">
@@ -340,18 +344,29 @@ function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, qu
   )
 }
 
-function ResultsScreen({ question, leaderboard, players }) {
+function ResultsScreen({ question, leaderboard, pickedAnswer }) {
   const colors = ['#ff4757', '#2ed573', '#ffa502', '#3742fa']
+  const letters = ['A', 'B', 'C', 'D']
+  const answered = pickedAnswer !== null && pickedAnswer !== undefined
+  const wasCorrect = answered && pickedAnswer === question.correct_answer
 
   return (
     <div className="screen results-screen">
-      <div className="results-header">Question Results</div>
+      <div className="results-header">{question.is_tutorial ? 'Tutorial Results' : 'Question Results'}</div>
 
-      <div className="correct-answer-display">
-        <h2>Correct Answer:</h2>
-        <div className="correct-option" style={{ backgroundColor: colors[question.correct_answer] }}>
+      <div className={`result-banner ${answered ? (wasCorrect ? 'correct' : 'incorrect') : 'unanswered'}`}>
+        {answered ? (wasCorrect ? '✓ You got it right!' : '✗ Not quite') : "Time's up — no answer submitted"}
+      </div>
+
+      <div className="recap-question">
+        <div className="recap-question-text">{question.question}</div>
+        <div className="recap-answer" style={{ backgroundColor: colors[question.correct_answer] }}>
+          <span className="recap-answer-letter">{letters[question.correct_answer]}</span>
           {question.options[question.correct_answer]}
         </div>
+        {answered && !wasCorrect && (
+          <div className="your-answer">Your answer: {question.options[pickedAnswer]}</div>
+        )}
       </div>
 
       <div className="leaderboard-preview">
@@ -366,9 +381,11 @@ function ResultsScreen({ question, leaderboard, players }) {
         </ul>
       </div>
 
-      <div className="explanation">
-        {question.explanation}
-      </div>
+      {question.explanation && (
+        <div className="explanation">
+          {question.explanation}
+        </div>
+      )}
     </div>
   )
 }
