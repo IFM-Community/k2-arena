@@ -251,7 +251,7 @@ function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStart
       <div className="screen lobby-screen">
         <div className="title-gradient">
           <h1>K2 Arena</h1>
-          <p className="subtitle">The Arena is Filling Up...</p>
+          <p className="subtitle">10 Things You Should Know About IFM</p>
         </div>
         
         <div className="lobby-content">
