@@ -40,16 +40,16 @@
   },
   {
     "id": 3,
-    "question": "Q3. JAIS, IFM's flagship Arabic LLM, takes its name from what?",
+    "question": "Q3. IFM's two flagship model families, JAIS and K2, are both named after what?",
     "options": [
-      "An influential classical Arabic poet",
-      "The highest mountain in the UAE",
-      "The Arabic word meaning \"wisdom\"",
-      "The founding chancellor of MBZUAI"
+      "Falcons native to the Arabian Gulf",
+      "Stars used in traditional desert navigation",
+      "Classical Arabic scholars",
+      "Mountain peaks"
     ],
-    "correct_answer": 1,
+    "correct_answer": 3,
     "max_points": 1000,
-    "explanation": "JAIS is named after Jebel Jais, the highest mountain in the UAE, symbolizing reaching new heights in Arabic AI."
+    "explanation": "Both JAIS (named after Jebel Jais) and K2 (named after Jebel K2) are named after mountain peaks in the UAE and Saudi Arabia respectively."
   },
   {
     "id": 4,
@@ -66,7 +66,7 @@
   },
   {
     "id": 5,
-    "question": "Q5. Roughly how many parameters does K2 Think V3 have?",
+    "question": "Q5. Roughly how many parameters does K2 Think V3 have? For context, GPT-3, the model that launched the modern LLM era, had 175 billion.",
     "options": [
       "7 billion",
       "70 billion",
@@ -75,20 +75,20 @@
     ],
     "correct_answer": 2,
     "max_points": 1000,
-    "explanation": "K2 Think V3 has 375 billion parameters, placing it among the largest frontier models in the world."
+    "explanation": "K2 Think V3 has 375 billion parameters — more than double GPT-3's 175 billion, placing it among the largest frontier models."
   },
   {
     "id": 6,
-    "question": "Q6. The smallest model in the Jais family has 8 billion parameters. At standard 16-bit precision, roughly how much disk space does it need?",
+    "question": "Q6. When K2 Think V2 was released in early 2026, IFM highlighted a major first for the model. What was it?",
     "options": [
-      "About 2 GB",
-      "About 8 GB",
-      "About 16 GB",
-      "About 64 GB"
+      "The largest model ever trained in the Middle East",
+      "IFM's first fully sovereign reasoning model, built end to end on IFM's own base model and curated data",
+      "The first reasoning model to run natively on a smartphone",
+      "The first reasoning model trained primarily on Arabic-language data"
     ],
-    "correct_answer": 2,
+    "correct_answer": 1,
     "max_points": 1000,
-    "explanation": "At standard 16-bit (2 bytes per parameter) precision, an 8 billion parameter model requires approximately 16 GB of disk space."
+    "explanation": "K2 Think V2 was IFM's first fully sovereign reasoning model, built end-to-end on IFM's own base model and curated data."
   },
   {
     "id": 7,
@@ -108,7 +108,7 @@
     "question": "Q8. Which task is K2 Think V3 particularly strong at?",
     "options": [
       "Catching its own mistakes and correcting them while completing a task",
-      "Recalling breaking news from the past day without using a search tool",
+      "Reciting the day's breaking news from memory",
       "Running fully autonomously for days across hundreds of chained steps",
       "Producing flawless code for a large, sprawling multi-file codebase in one attempt"
     ],
@@ -133,13 +133,13 @@
     "id": 10,
     "question": "Q10. Which is the best-suited use case for K2 Think V3?",
     "options": [
-      "Independently running a multi-week project with no human oversight",
+      "Orchestrating a fleet of agents on an open-ended, months-long project",
       "Reading a long technical document, spotting gaps, and drafting a structured plan with working code",
-      "Delivering a final medical diagnosis without any human review",
-      "Answering questions about today's live events without any search tools"
+      "Reporting live scores and breaking news as events unfold",
+      "Making the final call on a patient's medical treatment"
     ],
     "correct_answer": 1,
     "max_points": 1000,
-    "explanation": "K2 Think V3 excels at reading long documents, identifying gaps, and producing structured plans with working code — ideal for complex reasoning tasks with human oversight."
+    "explanation": "K2 Think V3 excels at reading long documents, identifying gaps, and producing structured plans with working code — ideal for complex reasoning tasks."
   }
 ]
