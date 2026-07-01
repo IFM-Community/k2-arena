@@ -6,4 +6,4 @@ params = { "railwaypythonxref" = "3.11" }
 build = "cd frontend && npm install && npm run build"
 
 [postBuildCommand]
-command = "pwd && ls -la frontend/dist"
+command = "cd /app && ls -la frontend/dist 2>/dev/null || echo 'dist not found' && ls -la backend/static 2>/dev/null || echo 'backend/static not found'"
