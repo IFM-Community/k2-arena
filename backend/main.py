@@ -53,22 +53,6 @@ class Player:
         }
 
 
-TUTORIAL_QUESTION = {
-    "id": 0,
-    "question": "What does IFM stand for?",
-    "options": [
-        "Institute of Foundation Models",
-        "International Foundation for Machines",
-        "Institute for Machine Learning",
-        "Innovative Future Models",
-    ],
-    "correct_answer": 0,
-    "max_points": 500,
-    "explanation": "IFM stands for Institute of Foundation Models.",
-    "is_tutorial": True,
-}
-
-
 class Question:
     def __init__(self, data: dict):
         self.id = data["id"]
@@ -99,7 +83,7 @@ class Game:
         questions_path = os.path.join(base_dir, "questions.json")
         with open(questions_path, "r") as f:
             data = json.load(f)
-            self.questions = [Question(TUTORIAL_QUESTION)] + [Question(q) for q in data]
+            self.questions = [Question(q) for q in data]
 
     @property
     def real_question_count(self) -> int:
@@ -195,7 +179,7 @@ async def connect(sid, environ):
     else:
         await sio.emit("game_running_state", {
             "is_observer": True,
-            "message": "Game in progress — you joined late, sit back and watch!",
+            "message": "Game in progress: you joined late, sit back and watch!",
             "current_question": game.get_current_question_for_player(),
             "leaderboard": game.get_leaderboard()
         }, to=sid)
@@ -212,9 +196,9 @@ async def join_lobby(sid, data):
     if game.state != GameState.LOBBY:
         game.players[sid] = Player(sid, username)
         game.players[sid].is_observer = True
-        sio.emit("game_running", {
+        await sio.emit("game_running", {
             "is_observer": True,
-            "message": "Game in progress — you joined late, sit back and watch!",
+            "message": "Game in progress: you joined late, sit back and watch!",
             "current_question": game.get_current_question_for_player(),
             "leaderboard": game.get_leaderboard()
         }, to=sid)
@@ -406,7 +390,7 @@ async def get_game_state():
 async def reset_game():
     global game
     game = Game()
-    sio.emit("game_reset", {})
+    await sio.emit("game_reset", {})
     return {"status": "ok"}
 
 

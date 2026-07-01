@@ -118,7 +118,7 @@ function App() {
 
     newSocket.on('game_running', (data) => {
       setIsObserver(true)
-      setObserverMessage(data.message || 'Game in progress — you joined late, sit back and watch!')
+      setObserverMessage(data.message || 'Game in progress: you joined late, sit back and watch!')
       setCurrentQuestion(data.current_question)
       setLeaderboard(data.leaderboard || [])
       setGameState('observer')
@@ -225,7 +225,7 @@ function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStart
       <div className="screen lobby-screen">
         <div className="title-gradient">
           <h1>K2 Arena</h1>
-          <p className="subtitle">Lobby — Waiting for everyone to join</p>
+          <p className="subtitle">Lobby: Waiting for everyone to join</p>
         </div>
         
         <div className="lobby-content">
@@ -330,7 +330,7 @@ function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, qu
 
       <div className="question-header">
         {question.is_tutorial ? (
-          <span className="question-number tutorial-badge">Tutorial — Practice Question</span>
+          <span className="question-number tutorial-badge">Tutorial: Practice Question</span>
         ) : (
           <span className="question-number">Question {questionIndex} / {totalQuestions}</span>
         )}
@@ -370,7 +370,7 @@ function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex
       <div className="results-header">{question.is_tutorial ? 'Tutorial Results' : 'Question Results'}</div>
 
       <div className={`result-banner ${answered ? (wasCorrect ? 'correct' : 'incorrect') : 'unanswered'}`}>
-        {answered ? (wasCorrect ? '✓ You got it right!' : '✗ Not quite') : "Time's up — no answer submitted"}
+        {answered ? (wasCorrect ? '✓ You got it right!' : '✗ Not quite') : "Time's up, no answer submitted"}
       </div>
 
       <div className="recap-question">
@@ -387,7 +387,7 @@ function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex
       </div>
 
       <div className="leaderboard-preview">
-        <h3>Leaderboard — Top 10</h3>
+        <h3>Leaderboard: Top 10</h3>
         <ul>
           {leaderboard.slice(0, 10).map((p, i) => (
             <li key={i} className={`leaderboard-item ${i === 0 ? 'winner' : ''}`}>

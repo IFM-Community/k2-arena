@@ -10,7 +10,8 @@
     ],
     "correct_answer": 1,
     "max_points": 0,
-    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society."
+    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society.",
+    "is_tutorial": true
   },
   {
     "id": 1,
@@ -49,7 +50,7 @@
     ],
     "correct_answer": 3,
     "max_points": 1000,
-    "explanation": "IFM has research hubs in Abu Dhabi, Paris, and Silicon Valley — not London."
+    "explanation": "IFM has research hubs in Abu Dhabi, Paris, and Silicon Valley, not London."
   },
   {
     "id": 4,
@@ -113,7 +114,7 @@
       "They release models 12 months after internal deployment"
     ],
     "correct_answer": 1,
-    "max_points": 1000,
+    "max_points": 1000
   },
   {
     "id": 9,

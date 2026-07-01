@@ -1,16 +1,16 @@
 # K2 Arena
 
-A real-time multiplayer quiz web app — a Kahoot-style experience for up to 30 players, themed around IFM (Institute of Foundation Models).
+A real-time multiplayer trivia web app for up to 30 players, testing what you know about IFM (Institute of Foundation Models).
 
 ## Features
 
-- **No room codes needed** — anyone with the URL can join
-- **Single game session** — only one game runs at a time
+- **No room codes needed**: anyone with the URL can join
+- **Single game session**: only one game runs at a time
 - **Real-time multiplayer** via Socket.io
-- **10 rounds** with IFM-themed questions
-- **Timer-based scoring** — faster correct answers earn more points
+- **Tutorial question** followed by 10 rounds of IFM-themed trivia
+- **Timer-based scoring**: faster correct answers earn more points
 - **Observer mode** for late joiners
-- **Mobile-friendly** — players can join on their phones
+- **Mobile-friendly**: players can join on their phones
 
 ## Tech Stack
 
@@ -39,7 +39,7 @@ A real-time multiplayer quiz web app — a Kahoot-style experience for up to 30 
    ```
    The frontend runs on `http://localhost:5173`
 
-3. **Open the app** — the lobby opens at `http://localhost:5173`
+3. **Open the app**: the lobby opens at `http://localhost:5173`
 
 ### How to Play
 
@@ -102,7 +102,7 @@ k2-arena/
 - **Max points**: 1000 per question
 - **Formula**: `max_points × (time_remaining / total_time)`
 - Wrong answers get 0 points
-- Linear decay — fastest answers get most points
+- Linear decay: fastest answers get most points
 
 ## License
 
