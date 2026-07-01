@@ -10,7 +10,8 @@
     ],
     "correct_answer": 0,
     "max_points": 0,
-    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society."
+    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society.",
+    "is_tutorial": true
   },
   {
     "id": 1,
@@ -36,7 +37,7 @@
     ],
     "correct_answer": 3,
     "max_points": 1000,
-    "explanation": "IFM has research hubs in Abu Dhabi, Silicon Valley, and Paris — not London."
+    "explanation": "IFM has research hubs in Abu Dhabi, Silicon Valley, and Paris, not London."
   },
   {
     "id": 3,
@@ -126,7 +127,7 @@
       "Generating an image based on a detailed text description"
     ],
     "correct_answer": 2,
-    "max_points": 1000,
+    "max_points": 1000
   },
   {
     "id": 10,
