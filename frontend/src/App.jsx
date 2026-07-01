@@ -19,6 +19,7 @@ function App() {
   const [host, setHost] = useState(null)
   const [pickedAnswer, setPickedAnswer] = useState(null)
   const [correctAnswerIndex, setCorrectAnswerIndex] = useState(null)
+  const [answerCounts, setAnswerCounts] = useState(null)
   const [isHost, setIsHost] = useState(false)
   const [isObserver, setIsObserver] = useState(false)
   const [observerMessage, setObserverMessage] = useState('')
@@ -78,6 +79,7 @@ function App() {
       setCurrentQuestionIndex(0)
       setPickedAnswer(null)
       setCorrectAnswerIndex(null)
+      setAnswerCounts(null)
     })
 
     newSocket.on('timer_started', (data) => {
@@ -97,6 +99,7 @@ function App() {
       setGameState('results')
       setLeaderboard(data.leaderboard || [])
       setCorrectAnswerIndex(data.correct_answer)
+      setAnswerCounts(data.answer_counts || null)
     })
 
     newSocket.on('next_question', (data) => {
@@ -105,6 +108,7 @@ function App() {
       setCurrentQuestionIndex(data.question_index)
       setPickedAnswer(null)
       setCorrectAnswerIndex(null)
+      setAnswerCounts(null)
     })
 
     newSocket.on('game_finished', (data) => {
@@ -138,6 +142,7 @@ function App() {
       setLeaderboard([])
       setPickedAnswer(null)
       setCorrectAnswerIndex(null)
+      setAnswerCounts(null)
       setIsHost(false)
       setIsObserver(false)
       setObserverMessage('')
@@ -214,6 +219,7 @@ function App() {
           leaderboard={leaderboard}
           pickedAnswer={pickedAnswer}
           correctAnswerIndex={correctAnswerIndex}
+          answerCounts={answerCounts}
           isHost={isHost}
           isLastQuestion={currentQuestionIndex >= totalQuestions}
           onAdvance={advanceQuestion}
@@ -245,7 +251,7 @@ function LobbyScreen({ onJoin, isHost, players, roomExists, lobbyJoined, onStart
       <div className="screen lobby-screen">
         <div className="title-gradient">
           <h1>K2 Arena</h1>
-          <p className="subtitle">Lobby: Waiting for everyone to join</p>
+          <p className="subtitle">The Arena is Filling Up...</p>
         </div>
         
         <div className="lobby-content">
@@ -350,7 +356,7 @@ function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, qu
 
       <div className="question-header">
         {question.is_tutorial ? (
-          <span className="question-number tutorial-badge">Tutorial: Practice Question</span>
+          <span className="question-number tutorial-badge">Practice Question</span>
         ) : (
           <span className="question-number">Question {questionIndex} / {totalQuestions}</span>
         )}
@@ -378,7 +384,7 @@ function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, qu
   )
 }
 
-function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex, isHost, isLastQuestion, onAdvance, questionIndex, totalQuestions }) {
+function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex, answerCounts, isHost, isLastQuestion, onAdvance, questionIndex, totalQuestions }) {
   const colors = ['#ff4757', '#2ed573', '#ffa502', '#3742fa']
   const letters = ['A', 'B', 'C', 'D']
   const answered = pickedAnswer !== null && pickedAnswer !== undefined
@@ -391,7 +397,7 @@ function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex
 
       <div className="question-header">
         {question.is_tutorial ? (
-          <span className="question-number tutorial-badge">Tutorial</span>
+          <span className="question-number tutorial-badge">Practice Question</span>
         ) : (
           <span className="question-number">Q{questionIndex} / {totalQuestions}</span>
         )}
@@ -425,6 +431,27 @@ function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex
           ))}
         </ul>
       </div>
+
+      {answerCounts && (
+        <div className="answer-breakdown">
+          <h3>How Everyone Answered</h3>
+          {question.options.map((option, i) => {
+            const count = answerCounts[i] || 0
+            const maxCount = Math.max(1, ...answerCounts)
+            const pct = (count / maxCount) * 100
+            return (
+              <div key={i} className="breakdown-row">
+                <span className="breakdown-letter" style={{ backgroundColor: colors[i] }}>{letters[i]}</span>
+                <div className="breakdown-bar-track">
+                  <div className="breakdown-bar" style={{ width: `${pct}%`, backgroundColor: colors[i] }} />
+                  <span className="breakdown-bar-text">{option}</span>
+                </div>
+                <span className="breakdown-count">{count}</span>
+              </div>
+            )
+          })}
+        </div>
+      )}
 
       {question.explanation && (
         <div className="explanation">

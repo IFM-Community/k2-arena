@@ -1,7 +1,7 @@
 [
   {
     "id": "tutorial",
-    "question": "Tutorial. What does IFM stand for?",
+    "question": "Tutorial: What does IFM stand for?",
     "options": [
       "International Foundation for Machines",
       "Institute of Foundation Models",

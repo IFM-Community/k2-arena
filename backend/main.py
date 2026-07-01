@@ -122,6 +122,16 @@ class Game:
         scored.sort(key=lambda x: x[1], reverse=True)
         return [{"rank": i + 1, "username": name, "score": score} for i, (name, score) in enumerate(scored)]
 
+    def get_answer_counts(self, question_index: int):
+        counts = [0, 0, 0, 0]
+        for p in self.players.values():
+            if p.is_observer:
+                continue
+            answer = p.answers.get(question_index)
+            if answer and 0 <= answer["option"] < len(counts):
+                counts[answer["option"]] += 1
+        return counts
+
 
 game = Game()
 
@@ -316,6 +326,7 @@ async def end_question():
     emit_to_all("question_ended", {
         "correct_answer": game.current_question.correct_answer if game.current_question else None,
         "leaderboard": game.get_leaderboard(),
+        "answer_counts": game.get_answer_counts(game.current_question_index),
     })
 
     game.current_question_index += 1

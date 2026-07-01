@@ -34,6 +34,7 @@ body {
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  gap: clamp(0.4rem, 1.2vh, 0.8rem);
 }
 
 .title-gradient {
@@ -456,6 +457,81 @@ body {
 @keyframes slideIn {
   from { transform: translateX(-20px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
+}
+
+.answer-breakdown {
+  background: rgba(255, 255, 255, 0.05);
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: clamp(0.5rem, 2vh, 1.5rem);
+}
+
+.answer-breakdown h3 {
+  color: #00d9ff;
+  margin-bottom: 0.75rem;
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  text-align: center;
+}
+
+.breakdown-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.breakdown-letter {
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+  flex-shrink: 0;
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
+}
+
+.breakdown-bar-track {
+  position: relative;
+  flex: 1;
+  height: clamp(1.6rem, 4vh, 2.2rem);
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.breakdown-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+  opacity: 0.55;
+}
+
+.breakdown-bar-text {
+  position: absolute;
+  top: 0;
+  left: 0.6rem;
+  height: 100%;
+  max-width: calc(100% - 1.2rem);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: clamp(0.7rem, 1.6vw, 0.9rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.breakdown-count {
+  width: 2em;
+  text-align: right;
+  color: #fff;
+  font-weight: bold;
+  flex-shrink: 0;
 }
 
 .explanation {
