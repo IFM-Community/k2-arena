@@ -111,6 +111,11 @@ class Game:
         self.question_timer = seconds
         self.timer_end = asyncio.get_event_loop().time() + seconds
 
+    def get_leaderboard(self):
+        scored = [(p.username, p.score) for p in self.players.values() if not p.is_observer]
+        scored.sort(key=lambda x: x[1], reverse=True)
+        return [{"rank": i + 1, "username": name, "score": score} for i, (name, score) in enumerate(scored)]
+
 
 game = Game()
 
@@ -328,15 +333,6 @@ def find_winner():
         return None
     scored.sort(key=lambda x: x[1], reverse=True)
     return {"username": scored[0][0], "score": scored[0][1]}
-
-
-def get_leaderboard():
-    scored = [(p.username, p.score) for p in game.players.values() if not p.is_observer]
-    scored.sort(key=lambda x: x[1], reverse=True)
-    return [{"rank": i+1, "username": name, "score": score} for i, (name, score) in enumerate(scored)]
-
-
-game.get_leaderboard = get_leaderboard
 
 
 @sio.event
