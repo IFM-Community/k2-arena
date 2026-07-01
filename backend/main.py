@@ -373,25 +373,40 @@ async def reset_game():
     return {"status": "ok"}
 
 
+# ---- Static file serving ----
+# Resolve frontend build directory (same fallback order as get_root())
+def _resolve_static_dir():
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    candidates = [
+        os.path.join(project_root, "dist"),
+        os.path.join(project_root, "frontend", "dist"),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "static"),
+    ]
+    for d in candidates:
+        if os.path.exists(d):
+            return d
+    return None
+
+_static_dir = _resolve_static_dir()
+if _static_dir:
+    _assets_dir = os.path.join(_static_dir, "assets")
+    if os.path.exists(_assets_dir):
+        app.mount("/assets", StaticFiles(directory=_assets_dir, html=False), name="assets")
+    # Mount individual files at root level (vite.svg, etc.) that live alongside index.html
+    for fname in os.listdir(_static_dir):
+        fpath = os.path.join(_static_dir, fname)
+        if os.path.isfile(fpath) and fpath.endswith(".svg"):
+            app.mount(f"/{fname}", StaticFiles(directory=_static_dir, html=False), name=f"static-{fname}")
+
+# ---- SPA catch-all (must come AFTER static mounts so they take priority) ----
 @app.get("/{full_path:path}")
 async def serve_spa(full_path: str):
-    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
-    if not os.path.exists(static_dir):
-        project_root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
-        if os.path.exists(project_root):
-            static_dir = project_root
-    index_path = os.path.join(static_dir, "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
+    if not _static_dir:
+        return HTMLResponse("<h1>Not Found</h1>", status_code=404)
+    # Only serve index.html for actual page routes (no file extension)
+    if "." not in full_path.split("/")[-1]:
+        index_path = os.path.join(_static_dir, "index.html")
+        if os.path.exists(index_path):
+            return FileResponse(index_path)
+    # Otherwise 404
     return HTMLResponse("<h1>Not Found</h1>", status_code=404)
-
-
-if __name__ == "__main__":
-    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
-    if not os.path.exists(static_dir):
-        project_root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "frontend", "dist")
-        if os.path.exists(project_root):
-            static_dir = project_root
-    if os.path.exists(static_dir):
-        app.mount("/static", StaticFiles(directory=static_dir), name="static")
-    uvicorn.run(sio_app, host="0.0.0.0", port=8000)
