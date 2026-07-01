@@ -7,7 +7,7 @@
   },
   "steps": {
     "install-frontend": {
-      "inputs": [{ "local": true }],
+      "inputs": [{ "local": true, "include": ["."] }],
       "commands": [
         "cd frontend && npm install"
       ]
