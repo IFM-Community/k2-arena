@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "provider": "node",
+  "packages": {
+    "node": "22",
+    "python": "3.13"
+  },
+  "buildAptPackages": ["git", "curl"],
+  "steps": {
+    "install-frontend": {
+      "commands": [
+        "cd frontend && npm install"
+      ]
+    },
+    "build-frontend": {
+      "inputs": [
+        { "step": "install-frontend", "include": ["."] }
+      ],
+      "commands": [
+        "cd frontend && npm run build",
+        "cp -r dist /app/backend/static"
+      ],
+      "deployOutputs": [
+        { "include": ["/app/backend"] }
+      ]
+    },
+    "install-python": {
+      "inputs": [
+        { "step": "build-frontend", "include": ["."] }
+      ],
+      "commands": [
+        "pip install -r requirements.txt"
+      ],
+      "deployOutputs": [
+        { "include": ["/app"] }
+      ]
+    }
+  },
+  "deploy": {
+    "base": {
+      "image": "ghcr.io/railwayapp/railpack-runtime:mise-2026.6.12"
+    },
+    "startCommand": "python -m uvicorn app:app --host 0.0.0.0 --port 8000",
+    "inputs": [
+      { "step": "install-python", "include": ["/app"] }
+    ]
+  }
+}
