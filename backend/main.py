@@ -359,12 +359,17 @@ def find_winner():
 
 @sio.event
 async def disconnect(sid):
+    global game
     if sid in game.players:
+        was_host = sid == game.host_sid
         del game.players[sid]
-        # If the host left, clear host_sid so a new session can be created
-        if sid == game.host_sid:
-            game.host_sid = None
-        emit_to_all("player_left", {"sid": sid})
+        if was_host:
+            # Host leaving ends the session entirely: reset the game so
+            # everyone has to rejoin and a new host gets assigned.
+            game = Game()
+            await sio.emit("game_reset", {})
+        else:
+            emit_to_all("player_left", {"sid": sid})
     print(f"Client disconnected: {sid}")
 
 

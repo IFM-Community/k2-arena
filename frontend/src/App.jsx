@@ -128,6 +128,24 @@ function App() {
       setPlayers(prev => prev.filter(p => p.sid !== data.sid))
     })
 
+    newSocket.on('game_reset', () => {
+      setGameState('lobby')
+      setPlayers([])
+      setObservers([])
+      setCurrentQuestion(null)
+      setCurrentQuestionIndex(0)
+      setTotalQuestions(0)
+      setLeaderboard([])
+      setPickedAnswer(null)
+      setCorrectAnswerIndex(null)
+      setIsHost(false)
+      setIsObserver(false)
+      setObserverMessage('')
+      setScores({})
+      setRoomExists(false)
+      setLobbyJoined(false)
+    })
+
     setSocket(newSocket)
 
     return () => {
@@ -199,6 +217,8 @@ function App() {
           isHost={isHost}
           isLastQuestion={currentQuestionIndex >= totalQuestions}
           onAdvance={advanceQuestion}
+          questionIndex={currentQuestionIndex}
+          totalQuestions={totalQuestions}
         />
       )}
       
@@ -358,7 +378,7 @@ function QuestionScreen({ question, timer, totalTime, onAnswer, pickedAnswer, qu
   )
 }
 
-function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex, isHost, isLastQuestion, onAdvance }) {
+function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex, isHost, isLastQuestion, onAdvance, questionIndex, totalQuestions }) {
   const colors = ['#ff4757', '#2ed573', '#ffa502', '#3742fa']
   const letters = ['A', 'B', 'C', 'D']
   const answered = pickedAnswer !== null && pickedAnswer !== undefined
@@ -367,7 +387,15 @@ function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex
 
   return (
     <div className="screen results-screen">
-      <div className="results-header">{question.is_tutorial ? 'Tutorial Results' : 'Question Results'}</div>
+      <div className="results-header">Results</div>
+
+      <div className="question-header">
+        {question.is_tutorial ? (
+          <span className="question-number tutorial-badge">Tutorial</span>
+        ) : (
+          <span className="question-number">Q{questionIndex} / {totalQuestions}</span>
+        )}
+      </div>
 
       <div className={`result-banner ${answered ? (wasCorrect ? 'correct' : 'incorrect') : 'unanswered'}`}>
         {answered ? (wasCorrect ? '✓ You got it right!' : '✗ Not quite') : "Time's up, no answer submitted"}
@@ -387,7 +415,7 @@ function ResultsScreen({ question, leaderboard, pickedAnswer, correctAnswerIndex
       </div>
 
       <div className="leaderboard-preview">
-        <h3>Leaderboard: Top 10</h3>
+        <h3>Leaderboard Top 10</h3>
         <ul>
           {leaderboard.slice(0, 10).map((p, i) => (
             <li key={i} className={`leaderboard-item ${i === 0 ? 'winner' : ''}`}>
