@@ -40,7 +40,7 @@
   },
   {
     "id": 3,
-    "question": "Q3. JAIS is IFM's flagship Arabic LLM. What is it named after?",
+    "question": "Q3. Jais is IFM's flagship Arabic LLM. What is it named after?",
     "options": [
       "A famous Arab poet",
       "The UAE's highest mountain",
@@ -49,7 +49,7 @@
     ],
     "correct_answer": 1,
     "max_points": 1000,
-    "explanation": "JAIS is named after Jebel Jais, the highest mountain in the UAE, symbolizing reaching new heights in Arabic AI."
+    "explanation": "Jais is named after Jebel Jais, the highest mountain in the UAE, symbolizing reaching new heights in Arabic AI."
   },
   {
     "id": 4,
@@ -79,7 +79,7 @@
   },
   {
     "id": 6,
-    "question": "Q6. The smallest Jais 2 model is available on Hugging Face. Approximately how large is it to download?",
+    "question": "Q6. The smallest Jais model is available on Hugging Face. Approximately how large is it to download?",
     "options": [
       "500 MB",
       "5 GB",
@@ -88,7 +88,7 @@
     ],
     "correct_answer": 1,
     "max_points": 1000,
-    "explanation": "The smallest Jais 2 model is approximately 5 GB to download from Hugging Face."
+    "explanation": "The smallest Jais model is approximately 5 GB to download from Hugging Face."
   },
   {
     "id": 7,
@@ -130,7 +130,7 @@
   },
   {
     "id": 10,
-    "question": "Q10. JAIS 2 was trained on the largest Arabic-first dataset ever assembled. Who were the three organizations behind it?",
+    "question": "Q10. Jais was trained on the largest Arabic-first dataset ever assembled. Who were the three organizations behind it?",
     "options": [
       "MBZUAI, Google DeepMind, and Cerebras",
       "MBZUAI, Inception, and Cerebras",
