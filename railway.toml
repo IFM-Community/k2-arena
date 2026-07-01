@@ -10,6 +10,3 @@ buildDir = "frontend"
 role = "public"
 [services.ports]
 port = 8000
-
-[postBuildCommand]
-command = "pip install -r backend/requirements.txt"
