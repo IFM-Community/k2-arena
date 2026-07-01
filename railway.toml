@@ -10,3 +10,4 @@ buildDir = "frontend"
 role = "public"
 [services.ports]
 port = 8000
+internalPort = 8080
