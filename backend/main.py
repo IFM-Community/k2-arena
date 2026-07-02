@@ -87,13 +87,22 @@ class Game:
 
     @property
     def real_question_count(self) -> int:
-        return len(self.questions) - 1
+        return sum(1 for q in self.questions if not q.is_tutorial)
 
     @property
     def current_question(self) -> Optional[Question]:
         if 0 <= self.current_question_index < len(self.questions):
             return self.questions[self.current_question_index]
         return None
+
+    def get_question_number(self, index: int) -> Optional[int]:
+        """1-based position among non-tutorial questions, or None if the
+        question at this index is itself a tutorial question."""
+        if index < 0 or index >= len(self.questions):
+            return None
+        if self.questions[index].is_tutorial:
+            return None
+        return sum(1 for q in self.questions[:index + 1] if not q.is_tutorial)
 
     def get_player_list(self):
         return [p.to_dict() for p in self.players.values() if not p.is_observer]
@@ -110,6 +119,7 @@ class Game:
             "options": self.current_question.options,
             "max_points": self.current_question.max_points,
             "is_tutorial": self.current_question.is_tutorial,
+            "question_number": self.get_question_number(self.current_question_index),
         }
 
     def start_timer(self, seconds: int):

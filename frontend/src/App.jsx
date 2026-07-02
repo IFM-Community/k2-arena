@@ -13,7 +13,6 @@ function App() {
   const [timerTotal, setTimerTotal] = useState(20)
   const [timeRemaining, setTimeRemaining] = useState(20)
   const timerStartRef = useRef(null)
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [leaderboard, setLeaderboard] = useState([])
   const [host, setHost] = useState(null)
@@ -76,7 +75,6 @@ function App() {
       setGameState('question')
       setCurrentQuestion(data.current_question)
       setTotalQuestions(data.total_questions)
-      setCurrentQuestionIndex(0)
       setPickedAnswer(null)
       setCorrectAnswerIndex(null)
       setAnswerCounts(null)
@@ -105,7 +103,6 @@ function App() {
     newSocket.on('next_question', (data) => {
       setGameState('question')
       setCurrentQuestion(data.current_question)
-      setCurrentQuestionIndex(data.question_index)
       setPickedAnswer(null)
       setCorrectAnswerIndex(null)
       setAnswerCounts(null)
@@ -137,7 +134,6 @@ function App() {
       setPlayers([])
       setObservers([])
       setCurrentQuestion(null)
-      setCurrentQuestionIndex(0)
       setTotalQuestions(0)
       setLeaderboard([])
       setPickedAnswer(null)
@@ -208,11 +204,11 @@ function App() {
           totalTime={timerTotal}
           onAnswer={submitAnswer}
           pickedAnswer={pickedAnswer}
-          questionIndex={currentQuestionIndex}
+          questionIndex={currentQuestion?.question_number}
           totalQuestions={totalQuestions}
         />
       )}
-      
+
       {gameState === 'results' && (
         <ResultsScreen
           question={currentQuestion}
@@ -221,9 +217,9 @@ function App() {
           correctAnswerIndex={correctAnswerIndex}
           answerCounts={answerCounts}
           isHost={isHost}
-          isLastQuestion={currentQuestionIndex >= totalQuestions}
+          isLastQuestion={currentQuestion?.question_number >= totalQuestions}
           onAdvance={advanceQuestion}
-          questionIndex={currentQuestionIndex}
+          questionIndex={currentQuestion?.question_number}
           totalQuestions={totalQuestions}
           myUsername={username}
         />

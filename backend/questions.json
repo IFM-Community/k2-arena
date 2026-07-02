@@ -10,7 +10,22 @@
     ],
     "correct_answer": 0,
     "max_points": 0,
-    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society."
+    "explanation": "IFM stands for Institute of Foundation Models, founded to advance AI for the benefit of society.",
+    "is_tutorial": true
+  },
+  {
+    "id": "tutorial-2",
+    "question": "What are IFM's flagship models?",
+    "options": [
+      "GPT-4, Llama, and Gemini",
+      "K2 Think, GPT-4, and PAN",
+      "K2 Think, Jais, and PAN",
+      "Jais, PAN, and Falcon"
+    ],
+    "correct_answer": 2,
+    "max_points": 0,
+    "explanation": "IFM's flagship models are K2 Think, Jais, and PAN.",
+    "is_tutorial": true
   },
   {
     "id": 1,
@@ -36,7 +51,7 @@
     ],
     "correct_answer": 3,
     "max_points": 1000,
-    "explanation": "IFM has research hubs in Abu Dhabi, Paris, and Silicon Valley — not London."
+    "explanation": "IFM has research hubs in Abu Dhabi, Paris, and Silicon Valley, not London."
   },
   {
     "id": 3,
@@ -75,7 +90,7 @@
     ],
     "correct_answer": 2,
     "max_points": 1000,
-    "explanation": "K2 Think V3 has 375 billion parameters — more than double GPT-3's 175 billion, placing it among the largest frontier models."
+    "explanation": "K2 Think V3 has 375 billion parameters, more than double GPT-3's 175 billion, placing it among the largest frontier models."
   },
   {
     "id": 6,
@@ -140,6 +155,6 @@
     ],
     "correct_answer": 1,
     "max_points": 1000,
-    "explanation": "K2 Think V3 excels at reading long documents, identifying gaps, and producing structured plans with working code — ideal for complex reasoning tasks."
+    "explanation": "K2 Think V3 excels at reading long documents, identifying gaps, and producing structured plans with working code, ideal for complex reasoning tasks."
   }
 ]
